@@ -7,12 +7,15 @@ import {IconButton} from 'react-native-paper';
 export default function App() {
   const [itemList, setItemList] = useState([]);
   const [isAddItem, setIsAddItem] = useState(false);
+  const [itemCount, setItemCount] = useState(1);
 
-  const handleEnteredItem = (itemValue) => {
+  const handleEnteredItem = (enteredItem) => {
     setItemList(prevState => [
       ...itemList,
-      {id: Math.random().toString(), value: itemValue}
+      {id: Math.random().toString(), value: enteredItem}
     ]);
+    setIsAddItem(false);
+    setItemCount(prevState => itemCount + 1);
   };
 
   const removeItemFromList = (itemId) => {
@@ -24,7 +27,7 @@ export default function App() {
   return (
     <View style={styles.screen}>
       <Button title="Add Item" onPress={() => setIsAddItem(true)} />
-      <ItemInput visible={isAddItem} onAddItem={handleEnteredItem} />
+      <ItemInput visible={isAddItem} onAddItem={handleEnteredItem} itemCount={itemCount} />
       <FlatList
         keyExtractor={(item, index) => item.id}
         data={itemList}
