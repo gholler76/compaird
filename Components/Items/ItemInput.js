@@ -8,8 +8,22 @@ const ItemInput = (props) => {
     setEnteredItem(enteredItem);
   };
 
+  const handleAddItem = () => {
+    props.onAddItem(enteredItem);
+    setEnteredItem('');
+  };
+
+  const handleCancel = () => {
+    props.onCancel();
+    setEnteredItem('');
+  };
+
   return (
-    <Modal visible={props.visible} animationType='fade' transparent={true}>
+    <Modal
+      visible={props.visible}
+      animationType='fade'
+      transparent={true}
+    >
       <View style={styles.inputContainer}>
         <Text style={styles.inputTitle}>Add an Item to Compare</Text>
         <Text style={styles.itemCount}>{props.itemCount} of 10</Text>
@@ -19,13 +33,13 @@ const ItemInput = (props) => {
           value={enteredItem}
         />
         <TouchableOpacity
-          style={styles.clearButton}
-          onPress={props.onAddItem.bind(this, enteredItem)}>
-          <Text style={styles.buttonText}>CLEAR</Text>
+          style={styles.cancelButton}
+          onPress={handleCancel}>
+          <Text style={styles.buttonText}>CANCEL</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.addButton}
-          onPress={props.onAddItem.bind(this, enteredItem)}>
+          onPress={handleAddItem}>
           <Text style={styles.buttonText}>ADD ITEM</Text>
         </TouchableOpacity>
       </View>
@@ -69,7 +83,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     borderRadius: 10
   },
-  clearButton: {
+  cancelButton: {
     backgroundColor: '#c0ccc0',
     alignItems: 'center',
     padding: 4,

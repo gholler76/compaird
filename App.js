@@ -22,12 +22,22 @@ export default function App() {
     setItemList(prevState => {
       return itemList.filter((item) => item.id !== itemId);
     });
+    setItemCount(prevState => itemCount - 1);
+  };
+
+  const handleCancelAddItem = () => {
+    setIsAddItem(false);
   };
 
   return (
     <View style={styles.screen}>
       <Button title="Add Item" onPress={() => setIsAddItem(true)} />
-      <ItemInput visible={isAddItem} onAddItem={handleEnteredItem} itemCount={itemCount} />
+      <ItemInput
+        visible={isAddItem}
+        onAddItem={handleEnteredItem}
+        itemCount={itemCount}
+        onCancel={handleCancelAddItem}
+      />
       <FlatList
         keyExtractor={(item, index) => item.id}
         data={itemList}

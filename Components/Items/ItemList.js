@@ -18,15 +18,15 @@ const ItemList = (props) => {
 const styles = StyleSheet.create({
   listItem: {
     backgroundColor: 'white',
-    width: '75%',
+    width: '70%',
     borderColor: '#669933',
     borderWidth: 2,
     padding: 8,
     marginVertical: 6
   },
   itemNumberBox: {
-    alignItems: 'center',
     width: '10%',
+    alignItems: 'center',
     backgroundColor: '#669933',
     paddingVertical: 4,
     fontSize: 24
