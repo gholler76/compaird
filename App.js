@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {StyleSheet, Button, View, FlatList, Text, TouchableOpacity} from 'react-native';
 import ItemList from './Components/Items/ItemList';
 import ItemInput from './Components/Items/ItemInput';
+import TopBar from './Components/TopBar/TopBar';
 import {IconButton} from 'react-native-paper';
 
 export default function App() {
@@ -31,12 +32,15 @@ export default function App() {
 
   return (
     <View style={styles.screen}>
-      <TouchableOpacity
-        style={styles.inputButton}
-        onPress={() => setIsAddItem(true)}
-      >
-        <Text style={styles.buttonText}>Add an Item</Text>
-      </TouchableOpacity>
+      <TopBar />
+      <View>
+        <TouchableOpacity
+          style={styles.inputButton}
+          onPress={() => setIsAddItem(true)}
+        >
+          <Text style={styles.buttonText}>Add an Item</Text>
+        </TouchableOpacity>
+      </View>
       <ItemInput
         visible={isAddItem}
         onAddItem={handleEnteredItem}
@@ -68,34 +72,41 @@ export default function App() {
 };
 const styles = StyleSheet.create({
   screen: {
-    padding: 48,
+    paddingTop: 36,
+    flexDirection: 'column',
     backgroundColor: "#99CC66",
     flex: 1,
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   listRow: {
     flexDirection: 'row'
   },
   inputButton: {
+    width: '80%',
     backgroundColor: '#ffff66',
     alignItems: 'center',
     padding: 4,
     marginBottom: 12,
     borderRadius: 10,
-    elevation: 8,
+    elevation: 12,
+    alignSelf: 'center',
   },
   clearButton: {
+    width: '50%',
     backgroundColor: '#c0ccc0',
     alignItems: 'center',
     padding: 4,
-    marginTop: 12,
+    marginVertical: 18,
     borderRadius: 10,
-    elevation: 8,
-
+    elevation: 12,
+    alignSelf: 'center',
   },
   buttonText: {
     fontWeight: 'bold',
     fontSize: 24
+  },
+  buttonBox: {
+    justifyContent: 'center',
   }
 }
 );
