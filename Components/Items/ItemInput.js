@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     padding: 4,
     width: '50%',
     marginBottom: 12,
-    borderRadius: 10
+    borderRadius: 12
   },
   cancelButton: {
     backgroundColor: '#c0ccc0',
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     padding: 4,
     width: '50%',
     marginBottom: 12,
-    borderRadius: 10
+    borderRadius: 12
   },
   buttonText: {
     fontWeight: 'bold',

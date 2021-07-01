@@ -9,11 +9,12 @@ export default function App() {
   const [itemList, setItemList] = useState([]);
   const [isAddItem, setIsAddItem] = useState(false);
   const [itemCount, setItemCount] = useState(1);
+  const [matchups, setMatchups] = useState([]);
 
   const handleEnteredItem = (enteredItem) => {
     setItemList(prevState => [
       ...itemList,
-      {id: Math.random().toString(), value: enteredItem}
+      {id: Math.random().toString(), value: enteredItem, score: 0}
     ]);
     setIsAddItem(false);
     setItemCount(prevState => itemCount + 1);
@@ -28,6 +29,10 @@ export default function App() {
 
   const handleCancelAddItem = () => {
     setIsAddItem(false);
+  };
+
+  const createMatchups = (itemList) => {
+
   };
 
   return (
@@ -67,6 +72,12 @@ export default function App() {
       >
         <Text style={styles.buttonText}>Clear All</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.compareButton}
+        onPress={() => createMatchups([])}
+      >
+        <Text style={styles.buttonText}>Compare Your Items</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -87,7 +98,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 4,
     marginBottom: 12,
-    borderRadius: 10,
+    borderRadius: 12,
+    elevation: 12,
+    alignSelf: 'center',
+  },
+  compareButton: {
+    width: '80%',
+    backgroundColor: '#ffff66',
+    alignItems: 'center',
+    padding: 4,
+    marginBottom: 18,
+    borderRadius: 12,
     elevation: 12,
     alignSelf: 'center',
   },
@@ -96,8 +117,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#c0ccc0',
     alignItems: 'center',
     padding: 4,
-    marginVertical: 18,
-    borderRadius: 10,
+    marginVertical: 12,
+    borderRadius: 12,
     elevation: 12,
     alignSelf: 'center',
   },
