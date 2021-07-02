@@ -5,6 +5,10 @@ import ItemInput from './Components/Items/ItemInput';
 import TopBar from './Components/TopBar/TopBar';
 import {IconButton} from 'react-native-paper';
 
+import ResultsScreen from './Screens/Results';
+import CompareScreen from './Screens/CompareItems';
+import AddItemsScreen from './Screens/AddItems';
+
 export default function App() {
   const [itemList, setItemList] = useState([]);
   const [isAddItem, setIsAddItem] = useState(false);
