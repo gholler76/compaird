@@ -31,9 +31,21 @@ export default function App() {
     setIsAddItem(false);
   };
 
-  const createMatchups = (itemList) => {
+  function createMatchups() {
+    let matchups = [];
+    let one = 0;
+    let id = 0;
 
+    for (let i = 0;i < itemList.length - 1;i++) {
+      one = i;
+      for (let two = one + 1;two < itemList.length;two++) {
+        id++;
+        matchups.push({id: id, itemOne: itemList[one], itemTwo: itemList[two]});
+      }
+    }
+    setMatchups(prevState => (matchups));
   };
+
 
   return (
     <View style={styles.screen}>
