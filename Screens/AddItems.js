@@ -3,6 +3,8 @@ import {StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native';
 
 import ItemInput from '../components/items/ItemInput';
 
+import Colors from '../constants/colors/colors';
+
 const AddItemsScreen = props => {
   console.log(props);
 
@@ -97,7 +99,7 @@ const styles = StyleSheet.create({
   screen: {
     paddingTop: 36,
     flexDirection: 'column',
-    backgroundColor: "#99CC66",
+    backgroundColor: Colors.mainGreen,
     flex: 1,
     justifyContent: 'center',
   },
@@ -106,7 +108,7 @@ const styles = StyleSheet.create({
   },
   inputButton: {
     width: '80%',
-    backgroundColor: '#ffff66',
+    backgroundColor: Colors.mainYellow,
     alignItems: 'center',
     padding: 4,
     marginBottom: 12,
@@ -116,7 +118,7 @@ const styles = StyleSheet.create({
   },
   compareButton: {
     width: '80%',
-    backgroundColor: '#ffff66',
+    backgroundColor: Colors.mainYellow,
     alignItems: 'center',
     padding: 4,
     marginBottom: 18,
@@ -126,7 +128,7 @@ const styles = StyleSheet.create({
   },
   clearButton: {
     width: '50%',
-    backgroundColor: '#c0ccc0',
+    backgroundColor: Colors.liteGray,
     alignItems: 'center',
     padding: 4,
     marginVertical: 12,
