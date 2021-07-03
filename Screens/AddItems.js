@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native';
 
-import ItemInput from '../Components/Items/ItemInput';
+import ItemInput from '../components/items/ItemInput';
 
 const AddItemsScreen = props => {
   console.log(props);
