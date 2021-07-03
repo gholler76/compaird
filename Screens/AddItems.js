@@ -6,8 +6,6 @@ import ItemInput from '../components/items/ItemInput';
 import Colors from '../constants/colors/colors';
 
 const AddItemsScreen = props => {
-  console.log(props);
-
   const [itemList, setItemList] = useState([]);
   const [isAddItem, setIsAddItem] = useState(false);
   const [itemCount, setItemCount] = useState(1);
