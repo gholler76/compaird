@@ -1,15 +1,19 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native';
+import {IconButton} from 'react-native-paper';
 
 import ItemInput from '../components/items/ItemInput';
+import ItemList from '../components/items/ItemList';
 
+import Messages from '../constants/messages';
 import Colors from '../constants/colors/colors';
 
-const AddItemsScreen = props => {
+const AddItemsScreen = (props) => {
   const [itemList, setItemList] = useState([]);
   const [isAddItem, setIsAddItem] = useState(false);
   const [itemCount, setItemCount] = useState(1);
   const [matchups, setMatchups] = useState([]);
+  const messages = [Messages];
 
   const handleEnteredItem = (enteredItem) => {
     setItemList(prevState => [
@@ -32,20 +36,25 @@ const AddItemsScreen = props => {
   };
 
   function createMatchups() {
-    let matchups = [];
-    let one = 0;
-    let id = 0;
+    if (itemList.length < 3) {
+      return alert("Your list must include at least 3 items to be compared.");
+    } else {
+      let matchups = [];
+      let one = 0;
+      let id = 0;
 
-    for (let i = 0;i < itemList.length - 1;i++) {
-      one = i;
-      for (let two = one + 1;two < itemList.length;two++) {
-        id++;
-        matchups.push({id: id, itemOne: itemList[one], itemTwo: itemList[two]});
+      for (let i = 0;i < itemList.length - 1;i++) {
+        one = i;
+        for (let two = one + 1;two < itemList.length;two++) {
+          id++;
+          matchups.push({id: id, itemOne: itemList[one], itemTwo: itemList[two]});
+        }
       }
-    }
-    setMatchups(prevState => (matchups));
-    props.navigation.navigate({routeName: 'CompareItems'});
-  };
+      setMatchups(prevState => (matchups));
+      props.navigation.navigate({routeName: 'CompareItems'});
+    };
+  }
+  console.log(matchups);
 
 
   return (
@@ -145,4 +154,4 @@ const styles = StyleSheet.create({
 );
 
 export default AddItemsScreen;
-
+;

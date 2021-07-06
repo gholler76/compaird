@@ -28,6 +28,7 @@ const ItemInput = (props) => {
         <Text style={styles.inputTitle}>Add an Item to Compare</Text>
         <Text style={styles.itemCount}>{props.itemCount} of 10</Text>
         <TextInput
+          autoFocus={true}
           style={styles.input}
           onChangeText={handleInputChange}
           value={enteredItem}
