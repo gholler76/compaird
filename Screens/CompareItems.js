@@ -8,17 +8,31 @@ const CompareScreen = props => {
     <View style={styles.screen}>
       <View >
         <Text style={styles.headerText}>Pick a Winner</Text>
+        <View style={styles.pickBox}>
+          <TouchableOpacity style={styles.itemButton}>
+            <Text style={styles.itemButtonText}>ITEM 1</Text>
+          </TouchableOpacity>
+          <Text style={styles.headerText}>OR</Text>
+          <TouchableOpacity style={styles.itemButton}>
+            <Text style={styles.itemButtonText}>ITEM 2</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      <View style={styles.pickBox}>
-        <TouchableOpacity style={styles.itemButton}>
-          <Text style={styles.buttonText}>ITEM 1</Text>
-        </TouchableOpacity>
-        <Text style={styles.headerText}>OR</Text>
-        <TouchableOpacity style={styles.itemButton}>
-          <Text style={styles.buttonText}>ITEM 2</Text>
-        </TouchableOpacity>
-
+      <View >
+        <Text style={styles.headerText}>How Far Apart Are They?</Text>
+        <View style={styles.pickBox}>
+          <TouchableOpacity style={styles.itemButton}>
+            <Text style={styles.itemButtonText}>ITEM 1</Text>
+          </TouchableOpacity>
+          <Text style={styles.headerText}>OR</Text>
+          <TouchableOpacity style={styles.itemButton}>
+            <Text style={styles.itemButtonText}>ITEM 2</Text>
+          </TouchableOpacity>
+        </View>
       </View>
+      <TouchableOpacity style={styles.submitButton}>
+        <Text style={styles.submitButtonText}>SEE RESULTS</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -29,7 +43,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: Colors.mainGreen,
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-around',
   },
   headerText: {
     fontSize: 24,
@@ -55,10 +69,24 @@ const styles = StyleSheet.create({
     elevation: 12,
     alignSelf: 'center',
   },
-  buttonText: {
+  itemButtonText: {
     fontWeight: 'bold',
     fontSize: 18,
     color: 'white'
+  },
+  submitButton: {
+    width: '80%',
+    backgroundColor: Colors.mainYellow,
+    alignItems: 'center',
+    padding: 4,
+    borderRadius: 12,
+    elevation: 12,
+    alignSelf: 'center',
+    marginVertical: 18,
+  },
+  submitButtonText: {
+    fontWeight: 'bold',
+    fontSize: 24,
   },
 
 });
