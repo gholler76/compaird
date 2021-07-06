@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+
+import Slider from '@react-native-community/slider';
 
 import Colors from '../constants/colors/colors';
 
 const CompareScreen = props => {
+  const;
   return (
     <View style={styles.screen}>
       <View >
@@ -20,14 +23,26 @@ const CompareScreen = props => {
       </View>
       <View >
         <Text style={styles.headerText}>How Far Apart Are They?</Text>
-        <View style={styles.pickBox}>
-          <TouchableOpacity style={styles.itemButton}>
+        <View style={styles.gapBox}>
+          <Slider
+            style={{width: '80%', height: 54}}
+            minimumValue={1}
+            maximumValue={3}
+            onValueChange={() => {}}
+            step={1}
+            value={1}
+            thumbTintColor={Colors.mainYellow}
+            minimumTrackTintColor={Colors.mainGreen}
+            maximumTrackTintColor={Colors.darkGreen}
+          />
+
+          {/* <TouchableOpacity style={styles.itemButton}>
             <Text style={styles.itemButtonText}>ITEM 1</Text>
           </TouchableOpacity>
           <Text style={styles.headerText}>OR</Text>
           <TouchableOpacity style={styles.itemButton}>
             <Text style={styles.itemButtonText}>ITEM 2</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
       <TouchableOpacity style={styles.submitButton}>
@@ -49,10 +64,21 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '700',
     textAlign: 'center',
+    marginBottom: 12
   },
   pickBox: {
     width: '67%',
     backgroundColor: 'white',
+    elevation: 12,
+    borderRadius: 12,
+    alignSelf: 'center',
+    alignItems: 'center',
+    paddingVertical: 18,
+    justifyContent: 'space-between'
+  },
+  gapBox: {
+    width: '67%',
+    backgroundColor: Colors.darkGray,
     elevation: 12,
     borderRadius: 12,
     alignSelf: 'center',
