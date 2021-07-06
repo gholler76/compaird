@@ -1,4 +1,4 @@
-import React, {} from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
 import Slider from '@react-native-community/slider';
@@ -6,7 +6,8 @@ import Slider from '@react-native-community/slider';
 import Colors from '../constants/colors/colors';
 
 const CompareScreen = props => {
-  const;
+  const [gapValue, setGapValue] = useState(1);
+
   return (
     <View style={styles.screen}>
       <View >
@@ -27,22 +28,17 @@ const CompareScreen = props => {
           <Slider
             style={{width: '80%', height: 54}}
             minimumValue={1}
-            maximumValue={3}
-            onValueChange={() => {}}
-            step={1}
+            maximumValue={5}
+            onValueChange={(value) => setGapValue(value)}
+            step={2}
             value={1}
             thumbTintColor={Colors.mainYellow}
             minimumTrackTintColor={Colors.mainGreen}
             maximumTrackTintColor={Colors.darkGreen}
           />
-
-          {/* <TouchableOpacity style={styles.itemButton}>
-            <Text style={styles.itemButtonText}>ITEM 1</Text>
-          </TouchableOpacity>
-          <Text style={styles.headerText}>OR</Text>
-          <TouchableOpacity style={styles.itemButton}>
-            <Text style={styles.itemButtonText}>ITEM 2</Text>
-          </TouchableOpacity> */}
+          <Text style={styles.gapText}>
+            {gapValue === 1 ? 'NOT FAR' : gapValue === 5 ? "VERY FAR" : "FAR"}
+          </Text>
         </View>
       </View>
       <TouchableOpacity style={styles.submitButton}>
@@ -65,6 +61,12 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textAlign: 'center',
     marginBottom: 12
+  },
+  gapText: {
+    fontSize: 48,
+    fontWeight: '700',
+    textAlign: 'center',
+    color: 'white'
   },
   pickBox: {
     width: '67%',
