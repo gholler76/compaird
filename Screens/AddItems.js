@@ -50,11 +50,13 @@ const AddItemsScreen = (props) => {
           matchups.push({id: id, itemOne: itemList[one], itemTwo: itemList[two]});
         }
       }
-      setMatchups(prevState => (matchups));
-      props.navigation.navigate({routeName: 'CompareItems'});
+      setMatchups(prevState => [matchups]);
+      props.navigation.navigate({
+        routeName: 'CompareItems',
+        params: {matchups, itemList},
+      });
     };
-  }
-  console.log(matchups);
+  };
 
 
   return (

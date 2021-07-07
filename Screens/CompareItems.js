@@ -8,30 +8,47 @@ import Colors from '../constants/colors/colors';
 const DATA = [
   {
     id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    title: "First Item",
+    title: "xxxxxcccccvvvvvbbbbb",
   },
   {
     id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
     title: "Second Item",
   },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    title: "Third Item",
-  },
 ];
 
 const Item = ({item, onPress, backgroundColor, textColor}) => (
-  <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
-    <Text style={[styles.title, textColor]}>{item.title}</Text>
-  </TouchableOpacity>
+  <View style={styles.itemBox}>
+    <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
+      <Text style={[styles.title, textColor]}>{item.value}</Text>
+    </TouchableOpacity>
+  </View>
 );
 
 const CompareScreen = props => {
+  const itemList = props.navigation.getParam('itemList');
+  console.log('****ITEMLIST****');
+  console.log(itemList);
+  const matchups = props.navigation.getParam('matchups');
+  console.log('****MATCHUPS****');
+  console.log(matchups.length);
+  console.log(matchups);
+
   const [gapValue, setGapValue] = useState(1);
   const [selectedId, setSelectedId] = useState(null);
+  const [results, setResults] = useState([]);
+  const [matchIndex, setMatchIndex] = useState(0);
+  const [match, setMatch] = useState([]);
+
+  const renderMatch = () => {
+    let thisMatch = matchups[matchIndex];
+    setMatch([thisMatch.itemOne, thisMatch.itemTwo]);
+  };
+  console.log('****thisMatch****');
+  console.log(match);
+
 
   const renderItem = ({item}) => {
-    const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#f9c2ff";
+    const backgroundColor = item.id === selectedId ? Colors.darkGreen : Colors.liteGray;
     const color = item.id === selectedId ? 'white' : 'black';
 
     return (
@@ -50,9 +67,8 @@ const CompareScreen = props => {
         <Text style={styles.headerText}>Pick a Winner</Text>
         <View style={styles.pickBox}>
           <FlatList
-            data={DATA}
+            data={match}
             renderItem={renderItem}
-            keyExtractor={(item) => item.id}
             extraData={selectedId}
           />
         </View>
@@ -76,7 +92,7 @@ const CompareScreen = props => {
           </Text>
         </View>
       </View>
-      <TouchableOpacity style={styles.submitButton}>
+      <TouchableOpacity style={styles.submitButton} onPress={renderMatch}>
         <Text style={styles.submitButtonText}>SEE RESULTS</Text>
       </TouchableOpacity>
     </View>
@@ -92,12 +108,20 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   item: {
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
+    padding: 12,
+    marginVertical: 12,
+    width: '100%',
+  },
+  itemBox: {
+    flex: 1,
+    flexDirection: 'row',
+    width: '90%',
+    alignSelf: 'center'
   },
   title: {
-    fontSize: 32,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   headerText: {
     fontSize: 24,
@@ -118,7 +142,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignSelf: 'center',
     alignItems: 'center',
-    paddingVertical: 18,
+    paddingVertical: 12,
     justifyContent: 'space-between'
   },
   gapBox: {
