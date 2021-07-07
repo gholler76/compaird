@@ -42,6 +42,8 @@ const CompareScreen = props => {
   const renderMatch = () => {
     let thisMatch = matchups[matchIndex];
     setMatch([thisMatch.itemOne, thisMatch.itemTwo]);
+    setMatchIndex(matchIndex + 1);
+    setSelectedId(null);
   };
   console.log('****thisMatch****');
   console.log(match);
