@@ -5,17 +5,6 @@ import Slider from '@react-native-community/slider';
 
 import Colors from '../constants/colors/colors';
 
-const DATA = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    title: "xxxxxcccccvvvvvbbbbb",
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    title: "Second Item",
-  },
-];
-
 const Item = ({item, onPress, backgroundColor, textColor}) => (
   <View style={styles.itemBox}>
     <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
@@ -32,21 +21,35 @@ const CompareScreen = props => {
   console.log('****MATCHUPS****');
   console.log(matchups.length);
   console.log(matchups);
+  const firstMatchup = props.navigation.getParam('firstMatchup');
 
   const [gapValue, setGapValue] = useState(1);
   const [selectedId, setSelectedId] = useState(null);
   const [results, setResults] = useState([]);
   const [matchIndex, setMatchIndex] = useState(0);
-  const [match, setMatch] = useState([]);
+  const [match, setMatch] = useState(firstMatchup);
+  const [topScore, setTopScore] = useState('');
 
-  const renderMatch = () => {
-    let thisMatch = matchups[matchIndex];
-    setMatch([thisMatch.itemOne, thisMatch.itemTwo]);
-    setMatchIndex(matchIndex + 1);
-    setSelectedId(null);
+
+  function renderMatch() {
+    if (matchIndex > matchups.length) {
+      return null;
+    } else {
+      let thisMatch = matchups[matchIndex + 1];
+      setMatch([thisMatch.itemOne, thisMatch.itemTwo]);
+    };
   };
+
+  function updateIndex() {
+    setMatchIndex(matchIndex + 1);
+  }
+
+  function resetSelectedId() {
+    setSelectedId(null);
+  }
   console.log('****thisMatch****');
   console.log(match);
+  console.log(matchIndex);
 
 
   const renderItem = ({item}) => {
@@ -94,7 +97,9 @@ const CompareScreen = props => {
           </Text>
         </View>
       </View>
-      <TouchableOpacity style={styles.submitButton} onPress={renderMatch}>
+      <TouchableOpacity
+        style={styles.submitButton}
+        onPress={() => {renderMatch(), updateIndex(), resetSelectedId();}}>
         <Text style={styles.submitButtonText}>SEE RESULTS</Text>
       </TouchableOpacity>
     </View>

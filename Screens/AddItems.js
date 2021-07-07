@@ -15,6 +15,8 @@ const AddItemsScreen = (props) => {
   const [matchups, setMatchups] = useState([]);
   const messages = [Messages];
 
+  const firstMatchup = [itemList[0], itemList[1]];
+
   const handleEnteredItem = (enteredItem) => {
     setItemList(prevState => [
       ...itemList,
@@ -53,7 +55,7 @@ const AddItemsScreen = (props) => {
       setMatchups(prevState => [matchups]);
       props.navigation.navigate({
         routeName: 'CompareItems',
-        params: {matchups, itemList},
+        params: {matchups, itemList, firstMatchup},
       });
     };
   };
