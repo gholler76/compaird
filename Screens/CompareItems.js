@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
+import {IconButton} from 'react-native-paper';
 
 import Slider from '@react-native-community/slider';
 
@@ -56,8 +57,15 @@ const CompareScreen = props => {
     );
   };
 
+  const showResults = () => {
+
+  };
+
   return (
     <View style={styles.screen}>
+      <View style={styles.matchupBox}>
+        <Text style={styles.matchupText}>Matchup {matchIndex + 1} of {matchups.length}</Text>
+      </View>
       <View >
         <Text style={styles.headerText}>Pick a Winner</Text>
         <View style={styles.pickBox}>
@@ -76,15 +84,30 @@ const CompareScreen = props => {
             minimumValue={1}
             maximumValue={5}
             onValueChange={(value) => setGapValue(value)}
-            step={2}
+            step={1}
             value={1}
             thumbTintColor={Colors.mainYellow}
             minimumTrackTintColor={Colors.mainGreen}
             maximumTrackTintColor={Colors.darkGreen}
           />
-          <Text style={styles.gapText}>
-            {gapValue === 1 ? 'NOT FAR' : gapValue === 5 ? "VERY FAR" : "FAR"}
-          </Text>
+          <View style={styles.gapScale}>
+            <Text style={styles.gapText}>
+              Small
+            </Text>
+            <IconButton
+              icon="chevron-left"
+              color={Colors.mainYellow}
+              size={24}
+            />
+            <IconButton
+              icon="chevron-right"
+              color={Colors.mainYellow}
+              size={24}
+            />
+            <Text style={styles.gapText}>
+              Large
+            </Text>
+          </View>
         </View>
       </View>
       <TouchableOpacity
@@ -97,7 +120,6 @@ const CompareScreen = props => {
 
 const styles = StyleSheet.create({
   screen: {
-    paddingTop: 36,
     flexDirection: 'column',
     backgroundColor: Colors.mainGreen,
     flex: 1,
@@ -119,6 +141,20 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
+  matchupBox: {
+    backgroundColor: Colors.darkGreen,
+    alignItems: 'center',
+    width: '80%',
+    borderRadius: 50,
+    alignSelf: 'center',
+    paddingVertical: 12,
+  },
+  matchupText: {
+    fontSize: 36,
+    fontWeight: '700',
+    textAlign: 'center',
+    color: 'white',
+  },
   headerText: {
     fontSize: 24,
     fontWeight: '700',
@@ -126,10 +162,14 @@ const styles = StyleSheet.create({
     marginBottom: 12
   },
   gapText: {
-    fontSize: 48,
+    fontSize: 24,
     fontWeight: '700',
     textAlign: 'center',
     color: 'white'
+  },
+  gapScale: {
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   pickBox: {
     width: '67%',
