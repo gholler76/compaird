@@ -15,42 +15,32 @@ const Item = ({item, onPress, backgroundColor, textColor}) => (
 
 const CompareScreen = props => {
   const itemList = props.navigation.getParam('itemList');
-  console.log('****ITEMLIST****');
-  console.log(itemList);
   const matchups = props.navigation.getParam('matchups');
-  console.log('****MATCHUPS****');
-  console.log(matchups.length);
-  console.log(matchups);
   const firstMatchup = props.navigation.getParam('firstMatchup');
 
   const [gapValue, setGapValue] = useState(1);
   const [selectedId, setSelectedId] = useState(null);
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState(itemList);
   const [matchIndex, setMatchIndex] = useState(0);
   const [match, setMatch] = useState(firstMatchup);
-  const [topScore, setTopScore] = useState('');
 
-
-  function renderMatch() {
+  const renderMatch = () => {
     if (matchIndex > matchups.length) {
       return null;
-    } else {
-      let thisMatch = matchups[matchIndex + 1];
-      setMatch([thisMatch.itemOne, thisMatch.itemTwo]);
+    }
+    else {
+      const updatedResults = results.map(el => el.id === selectedId ? {...el, score: el.score + gapValue} : el);
+      setResults(updatedResults);
+      console.log('****updatedResults****');
+
     };
-  };
 
-  function updateIndex() {
+    let nextMatch = matchups[matchIndex + 1];
+    setMatch([nextMatch.itemOne, nextMatch.itemTwo]);
     setMatchIndex(matchIndex + 1);
-  }
-
-  function resetSelectedId() {
     setSelectedId(null);
-  }
-  console.log('****thisMatch****');
-  console.log(match);
-  console.log(matchIndex);
-
+  };
+  console.log(results);
 
   const renderItem = ({item}) => {
     const backgroundColor = item.id === selectedId ? Colors.darkGreen : Colors.liteGray;
@@ -79,7 +69,7 @@ const CompareScreen = props => {
         </View>
       </View>
       <View >
-        <Text style={styles.headerText}>How Far Apart Are They?</Text>
+        <Text style={styles.headerText}>How Wide is the Gap?</Text>
         <View style={styles.gapBox}>
           <Slider
             style={{width: '80%', height: 54}}
@@ -98,8 +88,7 @@ const CompareScreen = props => {
         </View>
       </View>
       <TouchableOpacity
-        style={styles.submitButton}
-        onPress={() => {renderMatch(), updateIndex(), resetSelectedId();}}>
+        style={styles.submitButton} onPress={() => renderMatch()}>
         <Text style={styles.submitButtonText}>SEE RESULTS</Text>
       </TouchableOpacity>
     </View>
