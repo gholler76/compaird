@@ -61,6 +61,10 @@ const AddItemsScreen = (props) => {
     };
   };
 
+  const handleClearItems = () => {
+    setItemCount(1);
+    setItemList([]);
+  };
 
   return (
     <View style={styles.screen}>
@@ -94,7 +98,7 @@ const AddItemsScreen = (props) => {
       />
       <TouchableOpacity
         style={styles.clearButton}
-        onPress={() => setItemList([])}
+        onPress={() => handleClearItems()}
       >
         <Text style={styles.buttonText}>Clear All</Text>
       </TouchableOpacity>

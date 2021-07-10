@@ -1,23 +1,29 @@
-import React, {useEffect} from 'react';
-import {StyleSheet, Text, ScrollView, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, Text, ScrollView, View, TouchableOpacity} from 'react-native';
 
 import Colors from '../constants/colors/colors';
 
 const ResultsScreen = props => {
   const results = props.navigation.getParam('results');
 
+  const [remainder, setRemainder] = useState([]);
   useEffect(() => {
     results.sort((a, b) => {
       return b.score - a.score;
     });
     console.log('****sorted results****');
     console.log(results);
+
+    setRemainder(results.slice(1));
+
+    console.log('****remainder****');
+    console.log(remainder);
   }, []);
 
-  const remainder = results.slice(1);
 
-  console.log('****remainder****');
-  console.log(remainder);
+  const goHome = () => {
+    props.navigation.navigate('AddItems');
+  };
 
 
   return (
@@ -30,12 +36,17 @@ const ResultsScreen = props => {
       </View>
       <View style={styles.listBox}>
         <ScrollView>
-          {remainder.map((item) => {
+          {remainder.map((item, index) => {
             return (
-              <Text style={styles.listText} key={item.id}>{item.value}</Text>
+              <Text style={styles.listText} key={item.id}>{index + 2}. {item.value}</Text>
             );
           })}
         </ScrollView>
+      </View>
+      <View style={styles.homeBox}>
+        <TouchableOpacity style={styles.homeButton} onPress={() => goHome()}>
+          <Text style={styles.buttonText}>HOME</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -81,7 +92,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   listBox: {
-    backgroundColor: Colors.darkGreen,
+    backgroundColor: Colors.liteGray,
     width: '80%',
     justifyContent: 'center',
     alignItems: 'flex-start',
@@ -94,7 +105,27 @@ const styles = StyleSheet.create({
   listText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: 'white',
+    color: Colors.darkGray,
+    lineHeight: 28,
+  },
+  homeBox: {
+    flex: 1,
+    justifyContent: 'flex-end'
+  },
+  homeButton: {
+    width: '80%',
+    backgroundColor: Colors.mainYellow,
+    alignItems: 'center',
+    padding: 4,
+    borderRadius: 12,
+    elevation: 12,
+    alignSelf: 'center',
+    marginBottom: 12,
+  },
+  buttonText: {
+    fontWeight: 'bold',
+    fontSize: 24,
+    color: 'black',
   },
 });
 
