@@ -129,8 +129,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   item: {
-    padding: 12,
-    marginVertical: 12,
+    padding: 6,
+    marginVertical: 6,
     width: '100%',
   },
   itemBox: {

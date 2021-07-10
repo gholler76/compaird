@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     width: '70%',
     borderColor: '#669933',
     borderWidth: 2,
-    padding: 8,
+    padding: 6,
     marginVertical: 6
   },
   itemNumberBox: {

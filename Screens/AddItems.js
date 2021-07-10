@@ -113,7 +113,7 @@ const AddItemsScreen = (props) => {
 };
 const styles = StyleSheet.create({
   screen: {
-    paddingTop: 36,
+    paddingTop: 12,
     flexDirection: 'column',
     backgroundColor: Colors.mainGreen,
     flex: 1,
