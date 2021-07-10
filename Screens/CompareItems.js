@@ -26,22 +26,15 @@ const CompareScreen = props => {
   const [match, setMatch] = useState(firstMatchup);
 
   const renderMatch = () => {
-    if (matchIndex > matchups.length) {
-      return null;
-    }
-    else {
-      const updatedResults = results.map(el => el.id === selectedId ? {...el, score: el.score + gapValue} : el);
-      setResults(updatedResults);
-      console.log('****updatedResults****');
-
-    };
+    const updatedResults = results.map(el => el.id === selectedId ? {...el, score: el.score + gapValue} : el);
+    setResults(updatedResults);
 
     let nextMatch = matchups[matchIndex + 1];
     setMatch([nextMatch.itemOne, nextMatch.itemTwo]);
     setMatchIndex(matchIndex + 1);
     setSelectedId(null);
+    setGapValue(1);
   };
-  console.log(results);
 
   const renderItem = ({item}) => {
     const backgroundColor = item.id === selectedId ? Colors.darkGreen : Colors.liteGray;
@@ -58,7 +51,10 @@ const CompareScreen = props => {
   };
 
   const showResults = () => {
-
+    props.navigation.navigate({
+      routeName: 'Results',
+      params: {results}
+    });
   };
 
   return (
@@ -110,10 +106,17 @@ const CompareScreen = props => {
           </View>
         </View>
       </View>
-      <TouchableOpacity
-        style={styles.submitButton} onPress={() => renderMatch()}>
-        <Text style={styles.submitButtonText}>SEE RESULTS</Text>
-      </TouchableOpacity>
+      {matchIndex == matchups.length - 1 && selectedId != null ?
+        <TouchableOpacity
+          style={styles.submitButton} onPress={() => showResults()}>
+          <Text style={styles.submitButtonText}>SHOW RESULTS</Text>
+        </TouchableOpacity>
+        :
+        <TouchableOpacity
+          style={styles.submitButton} onPress={() => renderMatch()}>
+          <Text style={styles.submitButtonText}>NEXT MATCHUP</Text>
+        </TouchableOpacity>
+      }
     </View>
   );
 };
