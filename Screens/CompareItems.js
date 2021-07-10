@@ -151,6 +151,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     alignSelf: 'center',
     paddingVertical: 12,
+    elevation: 12,
   },
   matchupText: {
     fontSize: 36,

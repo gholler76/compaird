@@ -13,6 +13,7 @@ const AddItemsScreen = (props) => {
   const [isAddItem, setIsAddItem] = useState(false);
   const [itemCount, setItemCount] = useState(1);
   const [matchups, setMatchups] = useState([]);
+
   const messages = [Messages];
 
   const firstMatchup = [itemList[0], itemList[1]];
