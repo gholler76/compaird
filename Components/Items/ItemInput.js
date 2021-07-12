@@ -3,16 +3,24 @@ import {StyleSheet, View, TextInput, Text, Button, Modal, TouchableOpacity} from
 
 const ItemInput = (props) => {
   const [enteredItem, setEnteredItem] = useState('');
+  const itemList = props.itemList;
 
   const handleInputChange = (enteredItem) => {
-    setEnteredItem(enteredItem);
+    [...itemList].includes(enteredItem) ? alert("Item has already been entered") :
+      setEnteredItem(enteredItem);
   };
 
   const handleAddItem = () => {
+    const dup = itemList.some(item => item.value === enteredItem);
     enteredItem.length < 1 ? alert("Item field cannot be empty.") :
-      props.onAddItem(enteredItem);
+      dup ? alert("Item has already been entered") :
+        props.onAddItem(enteredItem);
     setEnteredItem('');
+    console.log('++++enteredItem++++');
+    console.log(enteredItem);
   };
+  console.log('++++itemList++++');
+  console.log(itemList);
 
   const handleCancel = () => {
     props.onCancel();

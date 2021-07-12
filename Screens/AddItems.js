@@ -64,13 +64,17 @@ const AddItemsScreen = (props) => {
     setItemList([]);
   };
 
+  const openAddItemModal = () => {
+    setIsAddItem(true);
+  };
+
   return (
     <View style={styles.screen}>
       {itemList.length !== 10 ?
         <View>
           <TouchableOpacity
             style={styles.inputButton}
-            onPress={() => setIsAddItem(true)}
+            onPress={openAddItemModal}
           >
             <Text style={styles.buttonText}>Add an Item</Text>
           </TouchableOpacity>
@@ -91,6 +95,7 @@ const AddItemsScreen = (props) => {
         onAddItem={handleEnteredItem}
         itemCount={itemCount}
         onCancel={handleCancelAddItem}
+        itemList={itemList}
       />
       <FlatList
         keyExtractor={(item, index) => item.id}
