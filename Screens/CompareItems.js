@@ -26,14 +26,19 @@ const CompareScreen = props => {
   const [match, setMatch] = useState(firstMatchup);
 
   const renderMatch = () => {
-    const updatedResults = results.map(el => el.id === selectedId ? {...el, score: el.score + gapValue} : el);
-    setResults(updatedResults);
+    if (!selectedId) {
+      return alert("You must choose a winner for this matchup");
+    } else {
 
-    let nextMatch = matchups[matchIndex + 1];
-    setMatch([nextMatch.itemOne, nextMatch.itemTwo]);
-    setMatchIndex(matchIndex + 1);
-    setSelectedId(null);
-    setGapValue(1);
+      const updatedResults = results.map(el => el.id === selectedId ? {...el, score: el.score + gapValue} : el);
+      setResults(updatedResults);
+
+      let nextMatch = matchups[matchIndex + 1];
+      setMatch([nextMatch.itemOne, nextMatch.itemTwo]);
+      setMatchIndex(matchIndex + 1);
+      setSelectedId(null);
+      setGapValue(1);
+    }
   };
 
   const renderItem = ({item}) => {
