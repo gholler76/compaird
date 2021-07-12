@@ -27,6 +27,9 @@ const AddItemsScreen = (props) => {
     setItemCount(prevState => itemCount + 1);
   };
 
+  console.log(itemList.length);
+
+
   const removeItemFromList = (itemId) => {
     setItemList(prevState => {
       return itemList.filter((item) => item.id !== itemId);
@@ -68,14 +71,26 @@ const AddItemsScreen = (props) => {
 
   return (
     <View style={styles.screen}>
-      <View>
-        <TouchableOpacity
-          style={styles.inputButton}
-          onPress={() => setIsAddItem(true)}
-        >
-          <Text style={styles.buttonText}>Add an Item</Text>
-        </TouchableOpacity>
-      </View>
+      {itemList.length !== 10 ?
+        <View>
+          <TouchableOpacity
+            style={styles.inputButton}
+            onPress={() => setIsAddItem(true)}
+          >
+            <Text style={styles.buttonText}>Add an Item</Text>
+          </TouchableOpacity>
+        </View>
+        :
+        <View>
+          <TouchableOpacity
+            disabled={true}
+            style={styles.disabledButton}
+            onPress={() => setIsAddItem(true)}
+          >
+            <Text style={styles.disabledText}>Add an Item</Text>
+          </TouchableOpacity>
+        </View>
+      }
       <ItemInput
         visible={isAddItem}
         onAddItem={handleEnteredItem}
@@ -132,6 +147,15 @@ const styles = StyleSheet.create({
     elevation: 12,
     alignSelf: 'center',
   },
+  disabledButton: {
+    width: '80%',
+    backgroundColor: Colors.liteGray,
+    alignItems: 'center',
+    padding: 4,
+    marginBottom: 12,
+    borderRadius: 12,
+    alignSelf: 'center',
+  },
   compareButton: {
     width: '80%',
     backgroundColor: Colors.mainYellow,
@@ -154,7 +178,13 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontWeight: 'bold',
-    fontSize: 24
+    fontSize: 24,
+    color: 'black',
+  },
+  disabledText: {
+    fontWeight: 'bold',
+    fontSize: 24,
+    color: Colors.mainGray
   },
   buttonBox: {
     justifyContent: 'center',
