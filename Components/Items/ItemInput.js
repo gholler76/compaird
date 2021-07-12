@@ -9,7 +9,8 @@ const ItemInput = (props) => {
   };
 
   const handleAddItem = () => {
-    props.onAddItem(enteredItem);
+    enteredItem.length < 1 ? alert("Item field cannot be empty.") :
+      props.onAddItem(enteredItem);
     setEnteredItem('');
   };
 

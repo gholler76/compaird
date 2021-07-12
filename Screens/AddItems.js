@@ -14,8 +14,6 @@ const AddItemsScreen = (props) => {
   const [itemCount, setItemCount] = useState(1);
   const [matchups, setMatchups] = useState([]);
 
-  const messages = [Messages];
-
   const firstMatchup = [itemList[0], itemList[1]];
 
   const handleEnteredItem = (enteredItem) => {
@@ -26,9 +24,6 @@ const AddItemsScreen = (props) => {
     setIsAddItem(false);
     setItemCount(prevState => itemCount + 1);
   };
-
-  console.log(itemList.length);
-
 
   const removeItemFromList = (itemId) => {
     setItemList(prevState => {
