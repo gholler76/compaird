@@ -6,12 +6,23 @@ import Colors from '../constants/colors/colors';
 const ResultsScreen = props => {
   const results = props.navigation.getParam('results');
   const matchupWinners = props.navigation.getParam('matchupWinners');
-  console.log('++++matchupWinners++++');
+  console.log('++++ matchupWinners ++++');
   console.log(matchupWinners);
-  console.log('++++results++++');
+  console.log('++++ results ++++');
   console.log(results);
 
+  const winner = () => {
+    if (results[0].score == results[1].score) {
+      const tiedItemsIndex = matchupWinners.findIndex(el => el.itemOne.id == results[0].id &&
+        el.itemTwo.id == results[1].id);
+      const winner = matchupWinners[tiedItemsIndex].winner;
+      console.log('++++ winner ++++');
+      console.log(winner);
 
+    }
+  };
+
+  winner();
 
   const [remainder, setRemainder] = useState([]);
   useEffect(() => {
