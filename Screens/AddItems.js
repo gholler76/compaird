@@ -36,8 +36,8 @@ const AddItemsScreen = (props) => {
   };
 
   function createMatchups() {
-    if (itemList.length < 3) {
-      return alert("Your list must include at least 3 items to be compared.");
+    if (itemList.length < 5) {
+      return alert("Your list must include at least 5 items to be compared.");
     } else {
       let matchups = [];
       let one = 0;
