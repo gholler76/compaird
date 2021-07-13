@@ -24,21 +24,27 @@ const CompareScreen = props => {
   const [results, setResults] = useState(itemList);
   const [matchIndex, setMatchIndex] = useState(0);
   const [match, setMatch] = useState(firstMatchup);
+  const [matchupWinners, setMatchupWinners] = useState(matchups);
 
   const renderMatch = () => {
     if (!selectedId) {
       return alert("You must choose a winner for this matchup");
     } else {
-
       const updatedResults = results.map(el => el.id === selectedId ? {...el, score: el.score + gapValue} : el);
       setResults(updatedResults);
 
-      let nextMatch = matchups[matchIndex + 1];
+      const updatedWinners = matchupWinners.map(el => el.id === matchIndex + 1 ? {...el, winner: selectedId} : el);
+      setMatchupWinners(updatedWinners);
+    }
+
+    if (matchIndex == matchups.length - 1) {
+      return;
+    } else {
+      const nextMatch = matchups[matchIndex + 1];
       setMatch([nextMatch.itemOne, nextMatch.itemTwo]);
       setMatchIndex(matchIndex + 1);
       setSelectedId(null);
-      setGapValue(1);
-    }
+    };
   };
 
   const renderItem = ({item}) => {
@@ -58,7 +64,7 @@ const CompareScreen = props => {
   const showResults = () => {
     props.navigation.navigate({
       routeName: 'Results',
-      params: {results}
+      params: {results, matchupWinners}
     });
   };
 
@@ -111,15 +117,15 @@ const CompareScreen = props => {
           </View>
         </View>
       </View>
-      {matchIndex == matchups.length - 1 && selectedId != null ?
+      {matchupWinners[matchups.length - 1].winner ?
         <TouchableOpacity
-          style={styles.submitButton} onPress={() => showResults()}>
-          <Text style={styles.submitButtonText}>SHOW RESULTS</Text>
+          style={styles.resultsButton} onPress={() => showResults()}>
+          <Text style={styles.resultsButtonText}>SHOW RESULTS</Text>
         </TouchableOpacity>
         :
         <TouchableOpacity
           style={styles.submitButton} onPress={() => renderMatch()}>
-          <Text style={styles.submitButtonText}>NEXT MATCHUP</Text>
+          <Text style={styles.submitButtonText}>SUBMIT</Text>
         </TouchableOpacity>
       }
     </View>
@@ -227,6 +233,21 @@ const styles = StyleSheet.create({
   submitButtonText: {
     fontWeight: 'bold',
     fontSize: 24,
+  },
+  resultsButton: {
+    width: '80%',
+    backgroundColor: 'white',
+    alignItems: 'center',
+    padding: 4,
+    borderRadius: 12,
+    elevation: 12,
+    alignSelf: 'center',
+    marginVertical: 18,
+  },
+  resultsButtonText: {
+    fontWeight: 'bold',
+    fontSize: 24,
+    color: Colors.darkGreen,
   },
 
 });

@@ -5,7 +5,6 @@ import {IconButton} from 'react-native-paper';
 import ItemInput from '../components/items/ItemInput';
 import ItemList from '../components/items/ItemList';
 
-import Messages from '../constants/messages';
 import Colors from '../constants/colors/colors';
 
 const AddItemsScreen = (props) => {
@@ -19,7 +18,7 @@ const AddItemsScreen = (props) => {
   const handleEnteredItem = (enteredItem) => {
     setItemList(prevState => [
       ...itemList,
-      {id: Math.random().toString(), value: enteredItem, score: 0}
+      {id: Math.floor(Math.random() * 10000).toString(), value: enteredItem, score: 0}
     ]);
     setIsAddItem(false);
     setItemCount(prevState => itemCount + 1);
@@ -149,8 +148,8 @@ const styles = StyleSheet.create({
   },
   disabledButton: {
     width: '80%',
-    backgroundColor: Colors.liteGray,
     alignItems: 'center',
+    backgroundColor: Colors.mainGreen,
     padding: 4,
     marginBottom: 12,
     borderRadius: 12,
@@ -161,7 +160,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.mainYellow,
     alignItems: 'center',
     padding: 4,
-    marginBottom: 18,
+    marginVertical: 12,
     borderRadius: 12,
     elevation: 12,
     alignSelf: 'center',
@@ -184,7 +183,7 @@ const styles = StyleSheet.create({
   disabledText: {
     fontWeight: 'bold',
     fontSize: 24,
-    color: Colors.mainGray
+    color: Colors.mainGreen,
   },
   buttonBox: {
     justifyContent: 'center',

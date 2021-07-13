@@ -16,11 +16,8 @@ const ItemInput = (props) => {
       dup ? alert("Item has already been entered") :
         props.onAddItem(enteredItem);
     setEnteredItem('');
-    console.log('++++enteredItem++++');
-    console.log(enteredItem);
   };
-  console.log('++++itemList++++');
-  console.log(itemList);
+
 
   const handleCancel = () => {
     props.onCancel();

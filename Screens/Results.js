@@ -5,19 +5,20 @@ import Colors from '../constants/colors/colors';
 
 const ResultsScreen = props => {
   const results = props.navigation.getParam('results');
+  const matchupWinners = props.navigation.getParam('matchupWinners');
+  console.log('++++matchupWinners++++');
+  console.log(matchupWinners);
+  console.log('++++results++++');
+  console.log(results);
+
+
 
   const [remainder, setRemainder] = useState([]);
   useEffect(() => {
     results.sort((a, b) => {
       return b.score - a.score;
     });
-    console.log('****sorted results****');
-    console.log(results);
-
     setRemainder(results.slice(1));
-
-    console.log('****remainder****');
-    console.log(remainder);
   }, []);
 
 
@@ -75,12 +76,12 @@ const styles = StyleSheet.create({
     fontSize: 48,
   },
   winnerBox: {
-    backgroundColor: Colors.mainYellow,
+    backgroundColor: Colors.darkYellow,
     width: '80%',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 12,
-    borderColor: Colors.darkGreen,
+    borderColor: 'white',
     borderWidth: 4,
     alignSelf: 'center',
     paddingVertical: 12,
@@ -97,6 +98,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
     borderRadius: 12,
+    borderWidth: 4,
+    borderColor: Colors.darkGray,
     alignSelf: 'center',
     padding: 12,
     marginTop: 24,
