@@ -1,14 +1,19 @@
 {
   "expo": {
-    "name": "compaird",
+    "name": "Compaird",
     "slug": "compaird",
+    "privacy": "public",
     "version": "1.0.0",
+    "sdkVersion": "41.0.0",
+    "platforms": [
+      "android"
+    ],
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/compaird_logo_icon_864.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/compaird_splash_480.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#669933"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
