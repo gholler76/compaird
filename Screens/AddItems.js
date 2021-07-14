@@ -36,8 +36,8 @@ const AddItemsScreen = (props) => {
   };
 
   function createMatchups() {
-    if (itemList.length < 5) {
-      return alert("Your list must include at least 5 items to be compared.");
+    if (itemList.length < 4) {
+      return alert("Your list must include at least 4 items to be compared.");
     } else {
       let matchups = [];
       let one = 0;
@@ -70,24 +70,19 @@ const AddItemsScreen = (props) => {
   return (
     <View style={styles.screen}>
       {itemList.length !== 10 ?
-        <View>
-          <TouchableOpacity
-            style={styles.inputButton}
-            onPress={openAddItemModal}
-          >
-            <Text style={styles.buttonText}>Add an Item</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          style={styles.inputButton}
+          onPress={openAddItemModal}
+        >
+          <Text style={styles.buttonText}>Add an Item</Text>
+        </TouchableOpacity>
         :
-        <View>
-          <TouchableOpacity
-            disabled={true}
-            style={styles.disabledButton}
-            onPress={() => setIsAddItem(true)}
-          >
-            <Text style={styles.disabledText}>Add an Item</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          disabled={true}
+          style={styles.disabledButton}
+        >
+          <Text style={styles.disabledText}>Add an Item</Text>
+        </TouchableOpacity>
       }
       <ItemInput
         visible={isAddItem}
@@ -116,12 +111,20 @@ const AddItemsScreen = (props) => {
       >
         <Text style={styles.buttonText}>Clear All</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.compareButton}
-        onPress={() => createMatchups([])}
-      >
-        <Text style={styles.buttonText}>Compare Your Items</Text>
-      </TouchableOpacity>
+      {itemList.length < 4 ?
+        <TouchableOpacity
+          style={styles.disabledButton}
+        >
+          <Text style={styles.disabledText}>Compare Your Items</Text>
+        </TouchableOpacity>
+        :
+        <TouchableOpacity
+          style={styles.compareButton}
+          onPress={() => createMatchups([])}
+        >
+          <Text style={styles.buttonText}>Compare Your Items</Text>
+        </TouchableOpacity>
+      }
     </View>
   );
 };
@@ -151,7 +154,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.mainGreen,
     padding: 4,
-    marginBottom: 12,
+    marginVertical: 12,
     borderRadius: 12,
     alignSelf: 'center',
   },
