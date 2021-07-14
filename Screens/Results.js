@@ -6,32 +6,33 @@ import Colors from '../constants/colors/colors';
 const ResultsScreen = props => {
   const results = props.navigation.getParam('results');
   const matchupWinners = props.navigation.getParam('matchupWinners');
-  console.log('++++ matchupWinners ++++');
-  console.log(matchupWinners);
-  console.log('++++ results ++++');
-  console.log(results);
+  const itemList = props.navigation.getParam('itemList');
 
-  const winner = () => {
-    if (results[0].score == results[1].score) {
-      const tiedItemsIndex = matchupWinners.findIndex(el => el.itemOne.id == results[0].id &&
-        el.itemTwo.id == results[1].id);
-      const winner = matchupWinners[tiedItemsIndex].winner;
-      console.log('++++ winner ++++');
-      console.log(winner);
+  const [winnerId, setWinnerId] = useState('');
+  const [sortedLosers, setSortedLosers] = useState([]);
+  const [winner, setWinner] = useState('');
 
-    }
-  };
-
-  winner();
-
-  const [remainder, setRemainder] = useState([]);
   useEffect(() => {
     results.sort((a, b) => {
       return b.score - a.score;
     });
-    setRemainder(results.slice(1));
+    if (results[0].score == results[1].score) {
+      const tiedItemsIndex = matchupWinners.findIndex(el => el.itemOne.id == results[0].id &&
+        el.itemTwo.id == results[1].id);
+      const tiebreaker = matchupWinners[tiedItemsIndex].winner;
+      setWinnerId(tiebreaker);
+    } else {
+      setWinnerId(results[0].id);
+    }
   }, []);
 
+  useEffect(() => {
+    const remainingItemsSorted = results.filter(el => el.id !== winnerId);
+    setSortedLosers(remainingItemsSorted);
+    const getWinnerValue = itemList.filter(el => el.id === winnerId)
+      .map(el => {return el.value;});
+    setWinner(getWinnerValue);
+  }, [winnerId]);
 
   const goHome = () => {
     props.navigation.navigate('AddItems');
@@ -44,11 +45,11 @@ const ResultsScreen = props => {
         <Text style={styles.titleText}>WINNER</Text>
       </View>
       <View style={styles.winnerBox}>
-        <Text style={styles.winnerText}>{results[0].value}</Text>
+        <Text style={styles.winnerText}>{winner}</Text>
       </View>
       <View style={styles.listBox}>
         <ScrollView>
-          {remainder.map((item, index) => {
+          {sortedLosers.map((item, index) => {
             return (
               <Text style={styles.listText} key={item.id}>{index + 2}. {item.value}</Text>
             );
@@ -104,6 +105,7 @@ const styles = StyleSheet.create({
   winnerText: {
     fontSize: 24,
     fontWeight: 'bold',
+    color: 'black',
   },
   listBox: {
     backgroundColor: Colors.liteGray,
@@ -146,4 +148,3 @@ const styles = StyleSheet.create({
 });
 
 export default ResultsScreen;
-

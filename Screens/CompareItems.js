@@ -64,7 +64,7 @@ const CompareScreen = props => {
   const showResults = () => {
     props.navigation.navigate({
       routeName: 'Results',
-      params: {results, matchupWinners}
+      params: {results, matchupWinners, itemList}
     });
   };
 
