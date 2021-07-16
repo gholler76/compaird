@@ -33,7 +33,7 @@ const ItemInput = (props) => {
     >
       <View style={styles.inputContainer}>
         <Text style={styles.inputTitle}>Add Item to Compare</Text>
-        <Text style={styles.itemCount}>{props.itemCount} of 10</Text>
+        <Text style={styles.itemCount}>{props.itemCount + 1} of 10</Text>
         <TextInput
           autoFocus={true}
           style={styles.input}
