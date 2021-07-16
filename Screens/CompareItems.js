@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, FlatList, TouchableOpacity, Dimensions} from 'react-native';
 import {IconButton} from 'react-native-paper';
 
 import Slider from '@react-native-community/slider';
@@ -142,12 +142,12 @@ const styles = StyleSheet.create({
   item: {
     padding: 6,
     marginVertical: 6,
-    width: '100%',
+    width: Dimensions.get('window').width * 1.0,
   },
   itemBox: {
     flex: 1,
     flexDirection: 'row',
-    width: '90%',
+    width: Dimensions.get('window').width * 0.9,
     alignSelf: 'center'
   },
   title: {
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
   matchupBox: {
     backgroundColor: Colors.darkGreen,
     alignItems: 'center',
-    width: '80%',
+    width: Dimensions.get('window').width * 0.8,
     borderRadius: 50,
     alignSelf: 'center',
     paddingVertical: 12,
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   pickBox: {
-    width: '67%',
+    width: Dimensions.get('window').width * 0.67,
     backgroundColor: 'white',
     elevation: 12,
     borderRadius: 12,
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   gapBox: {
-    width: '67%',
+    width: Dimensions.get('window').width * 0.67,
     backgroundColor: Colors.darkGray,
     elevation: 12,
     borderRadius: 12,
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   itemButton: {
-    width: '80%',
+    width: Dimensions.get('window').width * 0.8,
     backgroundColor: Colors.darkGreen,
     alignItems: 'center',
     padding: 4,
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   submitButton: {
-    width: '80%',
+    width: Dimensions.get('window').width * 0.8,
     backgroundColor: Colors.mainYellow,
     alignItems: 'center',
     padding: 4,
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   resultsButton: {
-    width: '80%',
+    width: Dimensions.get('window').width * 0.8,
     backgroundColor: 'white',
     alignItems: 'center',
     padding: 4,

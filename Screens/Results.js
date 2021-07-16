@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, ScrollView, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, ScrollView, View, TouchableOpacity, Dimensions} from 'react-native';
 
 import Colors from '../constants/colors/colors';
 
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   titleBox: {
     backgroundColor: Colors.darkGreen,
     alignItems: 'center',
-    width: '80%',
+    width: Dimensions.get('window').width * 0.8,
     borderColor: 'white',
     borderWidth: 4,
     alignSelf: 'center',
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
   winnerBox: {
     backgroundColor: Colors.darkYellow,
-    width: '80%',
+    width: Dimensions.get('window').width * 0.8,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 12,
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     borderWidth: 4,
     alignSelf: 'center',
     paddingVertical: 12,
-    height: '25%',
+    height: Dimensions.get('window').height * 0.25,
     elevation: 12,
   },
   winnerText: {
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   },
   listBox: {
     backgroundColor: Colors.liteGray,
-    width: '80%',
+    width: Dimensions.get('window').width * 0.8,
     justifyContent: 'center',
     alignItems: 'flex-start',
     borderRadius: 12,
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end'
   },
   homeButton: {
-    width: '80%',
+    width: Dimensions.get('window').width * 0.8,
     backgroundColor: Colors.mainYellow,
     alignItems: 'center',
     padding: 4,

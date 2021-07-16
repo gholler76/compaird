@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, TextInput, Text, Button, Modal, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, TextInput, Text, Button, Modal, TouchableOpacity, Dimensions} from 'react-native';
 
 const ItemInput = (props) => {
   const [enteredItem, setEnteredItem] = useState('');
@@ -57,7 +57,7 @@ const ItemInput = (props) => {
 const styles = StyleSheet.create({
   input: {
     backgroundColor: 'white',
-    width: '75%',
+    width: Dimensions.get('window').width * 0.75,
     padding: 8,
     marginBottom: 12,
     fontSize: 24,
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffff66',
     alignItems: 'center',
     padding: 4,
-    width: '50%',
+    width: Dimensions.get('window').width * 0.50,
     marginBottom: 12,
     borderRadius: 12
   },
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#c0ccc0',
     alignItems: 'center',
     padding: 4,
-    width: '50%',
+    width: Dimensions.get('window').width * 0.50,
     marginBottom: 12,
     borderRadius: 12
   },

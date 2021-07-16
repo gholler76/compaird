@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions} from 'react-native';
 import {IconButton} from 'react-native-paper';
 
 import ItemInput from '../components/items/ItemInput';
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   inputButton: {
-    width: '80%',
+    width: Dimensions.get('window').width * 0.8,
     backgroundColor: Colors.mainYellow,
     alignItems: 'center',
     padding: 4,
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   disabledButton: {
-    width: '80%',
+    width: Dimensions.get('window').width * 0.8,
     alignItems: 'center',
     backgroundColor: Colors.mainGreen,
     padding: 4,
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   compareButton: {
-    width: '80%',
+    width: Dimensions.get('window').width * 0.8,
     backgroundColor: Colors.mainYellow,
     alignItems: 'center',
     padding: 4,
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   clearButton: {
-    width: '50%',
+    width: Dimensions.get('window').width * 0.8,
     backgroundColor: Colors.liteGray,
     alignItems: 'center',
     padding: 4,
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
   emptyMessageBox: {
     flex: 1,
     alignItems: 'center',
-    width: '80%',
+    width: Dimensions.get('window').width * 0.8,
     alignSelf: 'center',
     paddingVertical: 6,
     marginVertical: 12,
