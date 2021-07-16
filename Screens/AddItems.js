@@ -94,27 +94,28 @@ const AddItemsScreen = (props) => {
       {itemList.length === 0 ? <View style={styles.emptyMessageBox}>
         <Text style={styles.emptyMessageText}>Click "Add an Item" to start your list!</Text>
       </View>
-        :
-        <FlatList
-          keyExtractor={(item, index) => item.id}
-          data={itemList}
-          renderItem={(itemData) => (
-            <View style={styles.listRow}>
-              <ItemList item={itemData.item.value} itemNumber={itemData.index + 1} itemId={itemData.item.id} />
-              <IconButton
-                icon="delete"
-                color="#404c40"
-                size={24}
-                onPress={removeItemFromList.bind(this, itemData.item.id)} />
-            </View>
-          )}
-        />}
-      <TouchableOpacity
-        style={styles.clearButton}
-        onPress={() => handleClearItems()}
-      >
-        <Text style={styles.buttonText}>Clear All</Text>
-      </TouchableOpacity>
+        : <>
+          <FlatList
+            keyExtractor={(item, index) => item.id}
+            data={itemList}
+            renderItem={(itemData) => (
+              <View style={styles.listRow}>
+                <ItemList item={itemData.item.value} itemNumber={itemData.index + 1} itemId={itemData.item.id} />
+                <IconButton
+                  icon="delete"
+                  color="#404c40"
+                  size={24}
+                  onPress={removeItemFromList.bind(this, itemData.item.id)} />
+              </View>
+            )}
+          />
+          <TouchableOpacity
+            style={styles.clearButton}
+            onPress={() => handleClearItems()}
+          >
+            <Text style={styles.buttonText}>Clear All</Text>
+          </TouchableOpacity>
+        </>}
       {itemList.length < 4 ?
         <TouchableOpacity
           style={styles.disabledButton}
