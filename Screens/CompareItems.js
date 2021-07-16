@@ -148,12 +148,12 @@ const styles = StyleSheet.create({
   item: {
     padding: 6,
     marginVertical: 6,
-    width: Dimensions.get('window').width * 1.0,
+    width: '100%',
   },
   itemBox: {
     flex: 1,
     flexDirection: 'row',
-    width: Dimensions.get('window').width * 0.9,
+    width: '90%',
     alignSelf: 'center'
   },
   title: {
