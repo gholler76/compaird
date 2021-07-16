@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   itemNumberBox: {
     width: Dimensions.get('window').width * 0.10,
     alignItems: 'center',
-    backgroundColor: '#669933',
+    backgroundColor: Colors.darkGreen,
     paddingVertical: 6,
     fontSize: 24,
     marginLeft: 16

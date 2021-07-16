@@ -8,14 +8,16 @@ const ResultsScreen = props => {
   const matchupWinners = props.navigation.getParam('matchupWinners');
   const itemList = props.navigation.getParam('itemList');
 
-  const [winnerId, setWinnerId] = useState('');
-  const [sortedLosers, setSortedLosers] = useState([]);
-  const [winner, setWinner] = useState('');
+  const [winnerId, setWinnerId] = useState(''); // set the if for the item with the highest score after all matchups
+  const [sortedLosers, setSortedLosers] = useState([]); // sort item list of non-winners
+  const [winner, setWinner] = useState(''); // set the item object of the overall winner
 
+  // sort items by total score and break tie at the top if needed
   useEffect(() => {
     results.sort((a, b) => {
       return b.score - a.score;
     });
+    // if the top two items are tied after sort, find their matchup and make that winner the overall winner
     if (results[0].score == results[1].score) {
       const tiedItemsIndex = matchupWinners.findIndex(el => el.itemOne.id == results[0].id &&
         el.itemTwo.id == results[1].id);
@@ -26,6 +28,7 @@ const ResultsScreen = props => {
     }
   }, []);
 
+  // when winner is updated, exclude winner and perform sort on the other items and set state
   useEffect(() => {
     const remainingItemsSorted = results.filter(el => el.id !== winnerId);
     setSortedLosers(remainingItemsSorted);
@@ -34,10 +37,10 @@ const ResultsScreen = props => {
     setWinner(getWinnerValue);
   }, [winnerId]);
 
+  // navigate back to home screen
   const goHome = () => {
     props.navigation.navigate('AddItems');
   };
-
 
   return (
     <View style={styles.screen}>

@@ -2,14 +2,15 @@ import React, {useState} from 'react';
 import {StyleSheet, View, TextInput, Text, Button, Modal, TouchableOpacity, Dimensions} from 'react-native';
 
 const ItemInput = (props) => {
-  const [enteredItem, setEnteredItem] = useState('');
+  const [enteredItem, setEnteredItem] = useState(''); // track the contents of the item input field
   const itemList = props.itemList;
 
+  // update item value with each change to the input
   const handleInputChange = (enteredItem) => {
-    [...itemList].includes(enteredItem) ? alert("Item has already been entered") :
-      setEnteredItem(enteredItem);
+    setEnteredItem(enteredItem);
   };
 
+  // do not allow blank input or duplicate value to be entered, otherwise, add item to list and reset item input to empty string
   const handleAddItem = () => {
     const dup = itemList.some(item => item.value === enteredItem);
     enteredItem.length < 1 ? alert("Item field cannot be empty.") :
@@ -18,7 +19,7 @@ const ItemInput = (props) => {
     setEnteredItem('');
   };
 
-
+  // cancel item input and reset to empty string
   const handleCancel = () => {
     props.onCancel();
     setEnteredItem('');

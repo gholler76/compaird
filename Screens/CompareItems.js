@@ -6,6 +6,7 @@ import Slider from '@react-native-community/slider';
 
 import Colors from '../constants/colors/colors';
 
+// set the default render properties for the item object used in the flatlist
 const Item = ({item, onPress, backgroundColor, textColor}) => (
   <View style={styles.itemBox}>
     <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
@@ -19,14 +20,16 @@ const CompareScreen = props => {
   const matchups = props.navigation.getParam('matchups');
   const firstMatchup = props.navigation.getParam('firstMatchup');
 
-  const [gapValue, setGapValue] = useState(1);
-  const [selectedId, setSelectedId] = useState(null);
-  const [results, setResults] = useState(itemList);
-  const [matchIndex, setMatchIndex] = useState(0);
-  const [match, setMatch] = useState(firstMatchup);
-  const [matchupWinners, setMatchupWinners] = useState(matchups);
+  const [gapValue, setGapValue] = useState(1); // track the gap value (1-5) chosen by the user for each matchup
+  const [selectedId, setSelectedId] = useState(null); // track the item id selected by the user as the winner for each matchup
+  const [results, setResults] = useState(itemList); // track the score totals for each item for all matchups
+  const [matchIndex, setMatchIndex] = useState(0); // set index for each matchup
+  const [match, setMatch] = useState(firstMatchup); // set the current matchup to be scored by the user
+  const [matchupWinners, setMatchupWinners] = useState(matchups); // map over matchups and populate the winner key with the item object
 
+  // takes selected item and gap value and updates result of the matchup, then sets up the next match
   const renderMatch = () => {
+    // don't render match if a winner hasn't been selected
     if (!selectedId) {
       return alert("You must choose a winner for this matchup");
     } else {
@@ -36,7 +39,7 @@ const CompareScreen = props => {
       const updatedWinners = matchupWinners.map(el => el.id === matchIndex + 1 ? {...el, winner: selectedId} : el);
       setMatchupWinners(updatedWinners);
     }
-
+    // if current match is the last match, don't increment match index or set up next match
     if (matchIndex == matchups.length - 1) {
       return;
     } else {
@@ -47,6 +50,7 @@ const CompareScreen = props => {
     };
   };
 
+  // change the appearance of the touchable item selected by the user by sending props to the item functional component 
   const renderItem = ({item}) => {
     const backgroundColor = item.id === selectedId ? Colors.darkGreen : Colors.liteGray;
     const color = item.id === selectedId ? 'white' : 'black';
@@ -61,6 +65,7 @@ const CompareScreen = props => {
     );
   };
 
+  // send user to results screen after all matchups were decided and pass props for results, winners and full item list 
   const showResults = () => {
     props.navigation.navigate({
       routeName: 'Results',
@@ -117,6 +122,7 @@ const CompareScreen = props => {
           </View>
         </View>
       </View>
+      {/* render submit button until final matchup is decided, then render show results button instead  */}
       {matchupWinners[matchups.length - 1].winner ?
         <TouchableOpacity
           style={styles.resultsButton} onPress={() => showResults()}>
