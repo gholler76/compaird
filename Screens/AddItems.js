@@ -91,20 +91,24 @@ const AddItemsScreen = (props) => {
         onCancel={handleCancelAddItem}
         itemList={itemList}
       />
-      <FlatList
-        keyExtractor={(item, index) => item.id}
-        data={itemList}
-        renderItem={(itemData) => (
-          <View style={styles.listRow}>
-            <ItemList item={itemData.item.value} itemNumber={itemData.index + 1} itemId={itemData.item.id} />
-            <IconButton
-              icon="delete"
-              color="#404c40"
-              size={24}
-              onPress={removeItemFromList.bind(this, itemData.item.id)} />
-          </View>
-        )}
-      />
+      {itemList.length === 0 ? <View style={styles.emptyMessageBox}>
+        <Text style={styles.emptyMessageText}>Click "Add an Item" to start your list!</Text>
+      </View>
+        :
+        <FlatList
+          keyExtractor={(item, index) => item.id}
+          data={itemList}
+          renderItem={(itemData) => (
+            <View style={styles.listRow}>
+              <ItemList item={itemData.item.value} itemNumber={itemData.index + 1} itemId={itemData.item.id} />
+              <IconButton
+                icon="delete"
+                color="#404c40"
+                size={24}
+                onPress={removeItemFromList.bind(this, itemData.item.id)} />
+            </View>
+          )}
+        />}
       <TouchableOpacity
         style={styles.clearButton}
         onPress={() => handleClearItems()}
@@ -190,7 +194,21 @@ const styles = StyleSheet.create({
   },
   buttonBox: {
     justifyContent: 'center',
-  }
+  },
+  emptyMessageBox: {
+    flex: 1,
+    alignItems: 'center',
+    width: '80%',
+    alignSelf: 'center',
+    paddingVertical: 6,
+    marginVertical: 12,
+  },
+  emptyMessageText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 36,
+  },
 }
 );
 

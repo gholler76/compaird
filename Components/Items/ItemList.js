@@ -1,6 +1,8 @@
 import React from 'react';
 import {StyleSheet, View, Text, Button} from 'react-native';
 
+import Colors from '../../constants/colors/colors';
+
 const ItemList = (props) => {
 
   return (
@@ -18,17 +20,17 @@ const ItemList = (props) => {
 const styles = StyleSheet.create({
   listItem: {
     backgroundColor: 'white',
-    width: '70%',
-    borderColor: '#669933',
+    width: '66%',
+    padding: 5,
     borderWidth: 2,
-    padding: 6,
-    marginVertical: 6
+    borderColor: Colors.darkGreen,
+    marginVertical: 6,
   },
   itemNumberBox: {
     width: '10%',
     alignItems: 'center',
     backgroundColor: '#669933',
-    paddingVertical: 4,
+    paddingVertical: 6,
     fontSize: 24
   },
   itemNumberText: {
