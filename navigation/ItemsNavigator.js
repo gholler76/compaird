@@ -13,7 +13,7 @@ class Wordmark extends React.Component {
   render() {
     return (
       <Image
-        source={require('../constants/images/Compaird_wordmark_32_DARK.png')}
+        source={require('../assets/compaird_wordmark_32_DARK.png')}
       />
     );
   }
@@ -30,8 +30,9 @@ const ItemsNavigator = createStackNavigator(
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: Colors.darkGreen,
-        height: 96
+        height: 96,
       },
+      headerTintColor: '#fff',
       headerTitle: () => <Wordmark />,
       headerTitleAlign: 'center'
     }
