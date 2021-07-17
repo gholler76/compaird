@@ -9,6 +9,7 @@ npm-debug.*
 *.orig.*
 web-build/
 brand
+aab_download
 
 # macOS
 .DS_Store
