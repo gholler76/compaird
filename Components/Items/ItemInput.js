@@ -1,5 +1,8 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, TextInput, Text, Button, Modal, TouchableOpacity, Dimensions} from 'react-native';
+import {StyleSheet, View, TextInput, Text, Modal, TouchableOpacity, Dimensions} from 'react-native';
+import {FAB} from 'react-native-paper';
+
+import Colors from '../../constants/colors/colors';
 
 const ItemInput = (props) => {
   const [enteredItem, setEnteredItem] = useState(''); // track the contents of the item input field
@@ -44,15 +47,17 @@ const ItemInput = (props) => {
         />
         <Text style={styles.charCount}>{20 - enteredItem.length} characters remaining</Text>
         <TouchableOpacity
-          style={styles.cancelButton}
-          onPress={handleCancel}>
-          <Text style={styles.buttonText}>CANCEL</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
           style={styles.addButton}
           onPress={handleAddItem}>
           <Text style={styles.buttonText}>ADD ITEM</Text>
         </TouchableOpacity>
+        <FAB
+          style={styles.cancelButton}
+          icon="close"
+          small
+          onPress={handleCancel}
+          color={'#fff'}
+        />
       </View>
     </Modal>
   );
@@ -101,12 +106,11 @@ const styles = StyleSheet.create({
     borderRadius: 12
   },
   cancelButton: {
-    backgroundColor: '#c0ccc0',
-    alignItems: 'center',
-    padding: 4,
-    width: Dimensions.get('window').width * 0.50,
-    marginBottom: 12,
-    borderRadius: 12
+    position: 'absolute',
+    margin: 36,
+    top: 0,
+    left: 0,
+    backgroundColor: 'transparent',
   },
   buttonText: {
     fontWeight: 'bold',
