@@ -3,7 +3,7 @@
     "name": "Compaird",
     "slug": "compaird",
     "privacy": "public",
-    "version": "1.0.4",
+    "version": "1.1.0",
     "sdkVersion": "41.0.0",
     "platforms": [
       "android"

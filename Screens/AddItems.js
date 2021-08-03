@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions} from 'react-native';
-import {IconButton} from 'react-native-paper';
+import {IconButton, FAB} from 'react-native-paper';
 
 import ItemInput from '../components/items/ItemInput';
 import ItemList from '../components/items/ItemList';
@@ -80,21 +80,12 @@ const AddItemsScreen = (props) => {
     <View style={styles.screen}>
       {/* as long as item count is less than 10, show the Add Item button
           if count is 10, remove button so no new items can be added */}
-      {itemList.length < 10 ?
-        <TouchableOpacity
-          style={styles.inputButton}
-          onPress={openAddItemModal}
-        >
-          <Text style={styles.buttonText}>Add an Item</Text>
-        </TouchableOpacity>
-        :
-        <TouchableOpacity
-          disabled={true}
-          style={styles.disabledButton}
-        >
-          <Text style={styles.disabledText}>Add an Item</Text>
-        </TouchableOpacity>
-      }
+      <FAB
+        style={styles.fab}
+        icon="plus"
+        visible={itemList.length < 10 ? true : false}
+        onPress={openAddItemModal}
+      />
       <ItemInput
         visible={isAddItem} // prop for modal component for true/false element value
         onAddItem={handleEnteredItem}
@@ -104,7 +95,7 @@ const AddItemsScreen = (props) => {
       />
       {/* if item list is empty, show the message below and remove clear button */}
       {itemList.length === 0 ? <View style={styles.emptyMessageBox}>
-        <Text style={styles.emptyMessageText}>Click "Add an Item" to start your list!</Text>
+        <Text style={styles.emptyMessageText}>Add Items to get started!</Text>
       </View>
         : <>
           <FlatList
@@ -157,24 +148,12 @@ const styles = StyleSheet.create({
   listRow: {
     flexDirection: 'row'
   },
-  inputButton: {
-    width: Dimensions.get('window').width * 0.8,
+  fab: {
+    position: 'absolute',
+    margin: 36,
+    right: 0,
+    bottom: 0,
     backgroundColor: Colors.mainYellow,
-    alignItems: 'center',
-    padding: 4,
-    marginBottom: 12,
-    borderRadius: 12,
-    elevation: 12,
-    alignSelf: 'center',
-  },
-  disabledButton: {
-    width: Dimensions.get('window').width * 0.8,
-    alignItems: 'center',
-    backgroundColor: Colors.mainGreen,
-    padding: 4,
-    marginVertical: 12,
-    borderRadius: 12,
-    alignSelf: 'center',
   },
   compareButton: {
     width: Dimensions.get('window').width * 0.8,
