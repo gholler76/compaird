@@ -112,13 +112,21 @@ const AddItemsScreen = (props) => {
               </View>
             )}
           />
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.clearButton}
             onPress={() => handleClearItems()}
-          >
+            >
             <Text style={styles.buttonText}>Clear All</Text>
-          </TouchableOpacity>
-        </>}
+          </TouchableOpacity> */}
+          <FAB
+            style={styles.clearButton}
+            onPress={() => handleClearItems()}
+            color={Colors.darkGray}
+            icon='delete-sweep'
+
+          />
+        </>
+      }
       {/* don't show compare button until there are at least 4 items in list */}
       {itemList.length < 4 ?
         <TouchableOpacity
@@ -166,14 +174,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   clearButton: {
-    width: Dimensions.get('window').width * 0.8,
+    position: 'absolute',
+    bottom: 36,
+    left: 36,
     backgroundColor: Colors.liteGray,
-    alignItems: 'center',
-    padding: 4,
-    marginVertical: 12,
-    borderRadius: 12,
-    elevation: 12,
-    alignSelf: 'center',
   },
   buttonText: {
     fontWeight: 'bold',
