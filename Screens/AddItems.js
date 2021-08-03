@@ -80,12 +80,6 @@ const AddItemsScreen = (props) => {
     <View style={styles.screen}>
       {/* as long as item count is less than 10, show the Add Item button
           if count is 10, remove button so no new items can be added */}
-      <FAB
-        style={styles.fab}
-        icon="plus"
-        visible={itemList.length < 10 ? true : false}
-        onPress={openAddItemModal}
-      />
       <ItemInput
         visible={isAddItem} // prop for modal component for true/false element value
         onAddItem={handleEnteredItem}
@@ -97,51 +91,42 @@ const AddItemsScreen = (props) => {
       {itemList.length === 0 ? <View style={styles.emptyMessageBox}>
         <Text style={styles.emptyMessageText}>Add Items to get started!</Text>
       </View>
-        : <>
-          <FlatList
-            keyExtractor={(item, index) => item.id}
-            data={itemList}
-            renderItem={(itemData) => (
-              <View style={styles.listRow}>
-                <ItemList item={itemData.item.value} itemNumber={itemData.index + 1} itemId={itemData.item.id} />
-                <IconButton
-                  icon="delete"
-                  color="#404c40"
-                  size={24}
-                  onPress={removeItemFromList.bind(this, itemData.item.id)} />
-              </View>
-            )}
-          />
-          {/* <TouchableOpacity
-            style={styles.clearButton}
-            onPress={() => handleClearItems()}
-            >
-            <Text style={styles.buttonText}>Clear All</Text>
-          </TouchableOpacity> */}
-          <FAB
-            style={styles.clearButton}
-            onPress={() => handleClearItems()}
-            color={Colors.darkGray}
-            icon='delete-sweep'
-
-          />
-        </>
-      }
-      {/* don't show compare button until there are at least 4 items in list */}
-      {itemList.length < 4 ?
-        <TouchableOpacity
-          style={styles.disabledButton}
-        >
-          <Text style={styles.disabledText}>Compare Your Items</Text>
-        </TouchableOpacity>
         :
-        <TouchableOpacity
-          style={styles.compareButton}
-          onPress={() => createMatchups([])}
-        >
-          <Text style={styles.buttonText}>Compare Your Items</Text>
-        </TouchableOpacity>
+        <FlatList
+          keyExtractor={(item, index) => item.id}
+          data={itemList}
+          renderItem={(itemData) => (
+            <View style={styles.listRow}>
+              <ItemList item={itemData.item.value} itemNumber={itemData.index + 1} itemId={itemData.item.id} />
+              <IconButton
+                icon="delete"
+                color="#404c40"
+                size={24}
+                onPress={removeItemFromList.bind(this, itemData.item.id)} />
+            </View>
+          )}
+        />
       }
+      <FAB
+        style={styles.clearButton}
+        onPress={() => handleClearItems()}
+        color={Colors.darkGray}
+        icon='delete-sweep'
+      />
+      {/* don't show compare button until there are at least 4 items in list */}
+      <FAB
+        style={styles.compareButton}
+        onPress={() => createMatchups([])}
+        label='Compare Items'
+        visible={itemList.length < 4 ? false : true}
+        color={Colors.darkGreen}
+      />
+      <FAB
+        style={styles.fab}
+        icon="plus"
+        visible={itemList.length < 10 ? true : false}
+        onPress={openAddItemModal}
+      />
     </View>
   );
 };
@@ -164,13 +149,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.mainYellow,
   },
   compareButton: {
-    width: Dimensions.get('window').width * 0.8,
-    backgroundColor: Colors.mainYellow,
-    alignItems: 'center',
-    padding: 4,
-    marginVertical: 12,
-    borderRadius: 12,
-    elevation: 12,
+    position: 'absolute',
+    bottom: 36,
+    backgroundColor: '#fff',
     alignSelf: 'center',
   },
   clearButton: {
