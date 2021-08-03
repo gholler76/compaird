@@ -46,11 +46,13 @@ const ItemInput = (props) => {
           maxLength={20}
         />
         <Text style={styles.charCount}>{20 - enteredItem.length} characters remaining</Text>
-        <TouchableOpacity
+        <FAB
           style={styles.addButton}
-          onPress={handleAddItem}>
-          <Text style={styles.buttonText}>ADD ITEM</Text>
-        </TouchableOpacity>
+          icon="plus"
+          label='Add item'
+          onPress={handleAddItem}
+          color={'#000'}
+        />
         <FAB
           style={styles.cancelButton}
           icon="close"
@@ -98,12 +100,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   addButton: {
-    backgroundColor: '#ffff66',
-    alignItems: 'center',
-    padding: 4,
-    width: Dimensions.get('window').width * 0.50,
-    marginBottom: 12,
-    borderRadius: 12
+    position: 'absolute',
+    margin: 72,
+    bottom: 0,
+    backgroundColor: Colors.mainYellow,
   },
   cancelButton: {
     position: 'absolute',
