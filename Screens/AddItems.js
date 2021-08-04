@@ -78,8 +78,6 @@ const AddItemsScreen = (props) => {
 
   return (
     <View style={styles.screen}>
-      {/* as long as item count is less than 10, show the Add Item button
-          if count is 10, remove button so no new items can be added */}
       <ItemInput
         visible={isAddItem} // prop for modal component for true/false element value
         onAddItem={handleEnteredItem}
@@ -87,7 +85,7 @@ const AddItemsScreen = (props) => {
         onCancel={handleCancelAddItem}
         itemList={itemList}
       />
-      {/* if item list is empty, show the message below and remove clear button */}
+      {/* if item list is empty, show the message below */}
       {itemList.length === 0 ? <View style={styles.emptyMessageBox}>
         <Text style={styles.emptyMessageText}>Add Items to get started!</Text>
       </View>
@@ -107,11 +105,13 @@ const AddItemsScreen = (props) => {
           )}
         />
       }
+      {/* don't show if list is empty */}
       <FAB
         style={styles.clearButton}
         onPress={() => handleClearItems()}
         color={Colors.darkGray}
         icon='delete-sweep'
+        visible={itemList.length === 0 ? false : true}
       />
       {/* don't show compare button until there are at least 4 items in list */}
       <FAB
@@ -121,6 +121,8 @@ const AddItemsScreen = (props) => {
         visible={itemList.length < 4 ? false : true}
         color={Colors.darkGreen}
       />
+      {/* as long as item count is less than 10, show the Add Item button
+          if count is 10, remove button so no new items can be added */}
       <FAB
         style={styles.addButton}
         icon="plus"

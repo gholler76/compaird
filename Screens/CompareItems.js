@@ -10,7 +10,7 @@ const CompareScreen = props => {
   const itemList = props.navigation.getParam('itemList');
   const matchups = props.navigation.getParam('matchups');
 
-  const lastMatchToggle = useRef(false);
+  const lastMatchToggle = useRef(false); // indicates whether the last match has been rendered
   const lastMatch = lastMatchToggle.current;
 
   const [selectedId, setSelectedId] = useState(null); // track the item id selected by the user as the winner for each matchup
@@ -31,7 +31,7 @@ const CompareScreen = props => {
       const updatedResults = results.map(el => el.id === matchIndex + 1 ? {...el, winner: el.winner = selectedId, score: el.score = gapValue} : el);
       setResults(updatedResults);
     };
-    // if current match is the final match, flip lastMatch toggle and don't try to render a new match
+    // if current match is the final match, flip lastMatch toggle to true and don't try to render a new match
     if (matchIndex == matchups.length - 1) {
       lastMatchToggle.current = true;
     } else {
@@ -40,7 +40,7 @@ const CompareScreen = props => {
     };
   };
 
-  // preserve the winner from the rendered match if it's been navigated to
+  // preserve the winner from the match if it's rerendered during back/next
   useEffect(() => {
     setSelectedId(results[matchIndex].winner);
   }, [matchIndex]);
@@ -55,6 +55,7 @@ const CompareScreen = props => {
 
   // move back through previous matchups and reset score for match so value doesn't duplicate
   const prevMatch = (index) => {
+    // if starting from the last match, delete the last match score to keep the total correct
     if (lastMatch == true) {
       const lastMatchup = results[results.length - 1];
       setTotalScore(totalScore.map(el => el.id === lastMatchup.winner ? {...el, score: el.score -= lastMatchup.score} : el));
@@ -63,21 +64,9 @@ const CompareScreen = props => {
     setMatchIndex(prev => index);
     const thisMatch = results[index];
     setSelectedId(thisMatch.winner);
+    // find the winner in the totalScore array and add the match score to that item's total
     setTotalScore(totalScore.map(el => el.id === thisMatch.winner ? {...el, score: el.score -= thisMatch.score} : el));
   };
-
-  console.log('==== results ====');
-  console.log(results);
-  console.log('==== totalScore ====');
-  console.log(totalScore);
-  console.log('==== selectedId ====');
-  console.log(selectedId);
-  console.log('==== matchIndex ====');
-  console.log(matchIndex);
-  console.log('==== lastMatch ====');
-  console.log(lastMatch);
-
-
 
   return (
     <View style={styles.screen}>
@@ -133,7 +122,7 @@ const CompareScreen = props => {
           </View>
         </View>
       </View>
-      {/* render submit button until final matchup is decided, then render show results button instead  */}
+      {/* show results button only when the lastMatch has been decided  */}
       <FAB
         style={styles.resultsButton}
         onPress={showResults}
@@ -141,12 +130,14 @@ const CompareScreen = props => {
         visible={lastMatch == true ? true : false}
         color={Colors.darkGreen}
       />
+      {/* show the back button only when the rendered match isn't the first match */}
       <FAB
         style={styles.backButton}
         onPress={() => prevMatch(matchIndex - 1)}
         icon="arrow-left-bold"
         visible={matchIndex === 0 ? false : true}
       />
+      {/* show next button until lastMatch has been decided */}
       <FAB
         style={styles.nextButton}
         onPress={renderMatch}

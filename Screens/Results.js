@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, ScrollView, View, TouchableOpacity, Dimensions} from 'react-native';
+import {FAB} from 'react-native-paper';
 
 import Colors from '../constants/colors/colors';
 
@@ -59,11 +60,12 @@ const ResultsScreen = props => {
           })}
         </ScrollView>
       </View>
-      <View style={styles.homeBox}>
-        <TouchableOpacity style={styles.homeButton} onPress={() => goHome()}>
-          <Text style={styles.buttonText}>HOME</Text>
-        </TouchableOpacity>
-      </View>
+      <FAB style={styles.homeButton}
+        onPress={() => goHome()}
+        icon='home'
+        visible={true}
+        color={Colors.darkGreen}
+      />
     </View>
   );
 };
@@ -129,19 +131,11 @@ const styles = StyleSheet.create({
     color: Colors.darkGray,
     lineHeight: 28,
   },
-  homeBox: {
-    flex: 1,
-    justifyContent: 'flex-end'
-  },
   homeButton: {
-    width: Dimensions.get('window').width * 0.8,
-    backgroundColor: Colors.mainYellow,
-    alignItems: 'center',
-    padding: 4,
-    borderRadius: 12,
-    elevation: 12,
+    position: 'absolute',
+    bottom: 32,
     alignSelf: 'center',
-    marginBottom: 12,
+    backgroundColor: '#fff',
   },
   buttonText: {
     fontWeight: 'bold',
