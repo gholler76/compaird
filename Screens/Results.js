@@ -4,8 +4,8 @@ import {StyleSheet, Text, ScrollView, View, TouchableOpacity, Dimensions} from '
 import Colors from '../constants/colors/colors';
 
 const ResultsScreen = props => {
+  const totalScore = props.navigation.getParam('totalScore');
   const results = props.navigation.getParam('results');
-  const matchupWinners = props.navigation.getParam('matchupWinners');
   const itemList = props.navigation.getParam('itemList');
 
   const [winnerId, setWinnerId] = useState(''); // set the if for the item with the highest score after all matchups
@@ -14,23 +14,23 @@ const ResultsScreen = props => {
 
   // sort items by total score and break tie at the top if needed
   useEffect(() => {
-    results.sort((a, b) => {
+    totalScore.sort((a, b) => {
       return b.score - a.score;
     });
     // if the top two items are tied after sort, find their matchup and make that winner the overall winner
-    if (results[0].score == results[1].score) {
-      const tiedItemsIndex = matchupWinners.findIndex(el => el.itemOne.id == results[0].id &&
-        el.itemTwo.id == results[1].id);
-      const tiebreaker = matchupWinners[tiedItemsIndex].winner;
+    if (totalScore[0].score == totalScore[1].score) {
+      const tiedItemsIndex = results.findIndex(el => el.itemOne.id == totalScore[0].id &&
+        el.itemTwo.id == totalScore[1].id);
+      const tiebreaker = results[tiedItemsIndex].winner;
       setWinnerId(tiebreaker);
     } else {
-      setWinnerId(results[0].id);
+      setWinnerId(totalScore[0].id);
     }
   }, []);
 
   // when winner is updated, exclude winner and perform sort on the other items and set state
   useEffect(() => {
-    const remainingItemsSorted = results.filter(el => el.id !== winnerId);
+    const remainingItemsSorted = totalScore.filter(el => el.id !== winnerId);
     setSortedLosers(remainingItemsSorted);
     const getWinnerValue = itemList.filter(el => el.id === winnerId)
       .map(el => {return el.value;});
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     elevation: 12,
   },
   listText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     color: Colors.darkGray,
     lineHeight: 28,

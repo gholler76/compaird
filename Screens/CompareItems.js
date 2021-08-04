@@ -1,19 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, FlatList, TouchableOpacity, Dimensions} from 'react-native';
-import {IconButton} from 'react-native-paper';
+import {StyleSheet, Text, View, TouchableOpacity, Dimensions} from 'react-native';
+import {FAB, IconButton} from 'react-native-paper';
 
 import Slider from '@react-native-community/slider';
 
 import Colors from '../constants/colors/colors';
-
-// set the default render properties for the item object used in the flatlist
-const Item = ({item, onPress, backgroundColor, textColor}) => (
-  <View style={styles.itemBox}>
-    <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
-      <Text style={[styles.title, textColor]}>{item.value}</Text>
-    </TouchableOpacity>
-  </View>
-);
 
 const CompareScreen = props => {
   const itemList = props.navigation.getParam('itemList');
@@ -22,10 +13,10 @@ const CompareScreen = props => {
 
   const [gapValue, setGapValue] = useState(1); // track the gap value (1-5) chosen by the user for each matchup
   const [selectedId, setSelectedId] = useState(null); // track the item id selected by the user as the winner for each matchup
-  const [results, setResults] = useState(itemList); // track the score totals for each item for all matchups
+  const [totalScore, setTotalScore] = useState(itemList); // track the score totals for each item for all matchups
   const [matchIndex, setMatchIndex] = useState(0); // set index for each matchup
   const [match, setMatch] = useState(firstMatchup); // set the current matchup to be scored by the user
-  const [matchupWinners, setMatchupWinners] = useState(matchups); // map over matchups and populate the winner key with the item object
+  const [results, setResults] = useState(matchups); // map over matchups and populate the winner and score
 
   // takes selected item and gap value and updates result of the matchup, then sets up the next match
   const renderMatch = () => {
@@ -33,15 +24,15 @@ const CompareScreen = props => {
     if (!selectedId) {
       return alert("You must choose a winner for this matchup");
     } else {
-      const updatedResults = results.map(el => el.id === selectedId ? {...el, score: el.score + gapValue} : el);
-      setResults(updatedResults);
+      const updatedScore = totalScore.map(el => el.id === selectedId ? {...el, score: el.score + gapValue} : el);
+      setTotalScore(updatedScore);
 
-      const updatedWinners = matchupWinners.map(el => el.id === matchIndex + 1 ? {...el, winner: selectedId} : el);
-      setMatchupWinners(updatedWinners);
-    }
-    // if current match is the last match, don't increment match index or set up next match
+      const updatedResults = results.map(el => el.id === matchIndex + 1 ? {...el, winner: el.winner = selectedId, score: el.score = gapValue} : el);
+      setResults(updatedResults);
+    };
+    // if current match is the final match, don't increment match index or set up next match
     if (matchIndex == matchups.length - 1) {
-      return;
+      null;
     } else {
       const nextMatch = matchups[matchIndex + 1];
       setMatch([nextMatch.itemOne, nextMatch.itemTwo]);
@@ -50,28 +41,20 @@ const CompareScreen = props => {
     };
   };
 
-  // change the appearance of the touchable item selected by the user by sending props to the item functional component 
-  const renderItem = ({item}) => {
-    const backgroundColor = item.id === selectedId ? Colors.darkGreen : Colors.liteGray;
-    const color = item.id === selectedId ? 'white' : 'black';
-
-    return (
-      <Item
-        item={item}
-        onPress={() => setSelectedId(item.id)}
-        backgroundColor={{backgroundColor}}
-        textColor={{color}}
-      />
-    );
-  };
-
   // send user to results screen after all matchups were decided and pass props for results, winners and full item list 
   const showResults = () => {
     props.navigation.navigate({
       routeName: 'Results',
-      params: {results, matchupWinners, itemList}
+      params: {results, totalScore, itemList}
     });
   };
+
+  console.log('==== results ====');
+  console.log(results);
+  console.log('==== totalScore ====');
+  console.log(totalScore);
+  console.log('==== selectedId ====');
+  console.log(selectedId);
 
   return (
     <View style={styles.screen}>
@@ -81,11 +64,16 @@ const CompareScreen = props => {
       <View >
         <Text style={styles.headerText}>Pick a Winner</Text>
         <View style={styles.pickBox}>
-          <FlatList
-            data={match}
-            renderItem={renderItem}
-            extraData={selectedId}
-          />
+          <View >
+            <TouchableOpacity onPress={() => setSelectedId(results[matchIndex].itemOne.id)} style={[styles.item, {backgroundColor: results[matchIndex].itemOne.id === selectedId ? Colors.darkGreen : Colors.liteGray}]}>
+              <Text style={{...styles.title, ...{color: results[matchIndex].itemOne.id === selectedId ? '#fff' : Colors.darkGray}}}>{results[matchIndex].itemOne.value}</Text>
+            </TouchableOpacity>
+          </View>
+          <View >
+            <TouchableOpacity onPress={() => setSelectedId(results[matchIndex].itemTwo.id)} style={[styles.item, {backgroundColor: results[matchIndex].itemTwo.id === selectedId ? Colors.darkGreen : Colors.liteGray}]}>
+              <Text style={{...styles.title, ...{color: results[matchIndex].itemTwo.id === selectedId ? '#fff' : Colors.darkGray}}}>{results[matchIndex].itemTwo.value}</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
       <View >
@@ -123,18 +111,26 @@ const CompareScreen = props => {
         </View>
       </View>
       {/* render submit button until final matchup is decided, then render show results button instead  */}
-      {matchupWinners[matchups.length - 1].winner ?
-        <TouchableOpacity
-          style={styles.resultsButton} onPress={() => showResults()}>
-          <Text style={styles.resultsButtonText}>SHOW RESULTS</Text>
-        </TouchableOpacity>
-        :
-        <TouchableOpacity
-          style={styles.submitButton} onPress={() => renderMatch()}>
-          <Text style={styles.submitButtonText}>SUBMIT</Text>
-        </TouchableOpacity>
-      }
-    </View>
+      <FAB
+        style={styles.resultsButton}
+        onPress={showResults}
+        label="SHOW RESULTS"
+        visible={results[results.length - 1].winner == null ? false : true}
+        color={Colors.darkGreen}
+      />
+      <FAB
+        style={styles.backButton}
+        onPress={() => prevMatch(matchIndex - 1)}
+        icon="arrow-left-bold"
+        visible={matchIndex === 0 ? false : true}
+      />
+      <FAB
+        style={styles.nextButton}
+        onPress={renderMatch}
+        icon="arrow-right-bold"
+        visible={results[results.length - 1].winner == null ? true : false}
+      />
+    </View >
   );
 };
 
@@ -143,23 +139,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: Colors.mainGreen,
     flex: 1,
-    justifyContent: 'space-around',
-  },
-  item: {
-    padding: 6,
-    marginVertical: 6,
-    width: '100%',
-  },
-  itemBox: {
-    flex: 1,
-    flexDirection: 'row',
-    width: '90%',
-    alignSelf: 'center'
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    justifyContent: 'flex-start',
   },
   matchupBox: {
     backgroundColor: Colors.darkGreen,
@@ -169,6 +149,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     paddingVertical: 12,
     elevation: 12,
+    marginVertical: 16,
   },
   matchupText: {
     fontSize: 36,
@@ -180,7 +161,29 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '700',
     textAlign: 'center',
-    marginBottom: 12
+    marginVertical: 16,
+  },
+  pickBox: {
+    width: Dimensions.get('window').width * 0.67,
+    backgroundColor: 'white',
+    elevation: 12,
+    borderRadius: 12,
+    alignSelf: 'center',
+    alignItems: 'center',
+    paddingVertical: 12,
+    marginBottom: 16,
+  },
+  item: {
+    padding: 4,
+    marginVertical: 6,
+    width: Dimensions.get('window').width * 0.6,
+    height: 44,
+    justifyContent: 'center',
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   gapText: {
     fontSize: 24,
@@ -191,16 +194,6 @@ const styles = StyleSheet.create({
   gapScale: {
     alignItems: 'center',
     flexDirection: 'row',
-  },
-  pickBox: {
-    width: Dimensions.get('window').width * 0.67,
-    backgroundColor: 'white',
-    elevation: 12,
-    borderRadius: 12,
-    alignSelf: 'center',
-    alignItems: 'center',
-    paddingVertical: 12,
-    justifyContent: 'space-between'
   },
   gapBox: {
     width: Dimensions.get('window').width * 0.67,
@@ -226,20 +219,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'white'
   },
-  submitButton: {
-    width: Dimensions.get('window').width * 0.8,
-    backgroundColor: Colors.mainYellow,
-    alignItems: 'center',
-    padding: 4,
-    borderRadius: 12,
-    elevation: 12,
-    alignSelf: 'center',
-    marginVertical: 18,
-  },
-  submitButtonText: {
-    fontWeight: 'bold',
-    fontSize: 24,
-  },
   resultsButton: {
     width: Dimensions.get('window').width * 0.8,
     backgroundColor: 'white',
@@ -254,6 +233,24 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 24,
     color: Colors.darkGreen,
+  },
+  nextButton: {
+    backgroundColor: Colors.mainYellow,
+    position: 'absolute',
+    bottom: 32,
+    right: 32,
+  },
+  backButton: {
+    backgroundColor: Colors.mainYellow,
+    position: 'absolute',
+    bottom: 32,
+    left: 32,
+  },
+  resultsButton: {
+    position: 'absolute',
+    bottom: 32,
+    backgroundColor: '#fff',
+    alignSelf: 'center',
   },
 
 });

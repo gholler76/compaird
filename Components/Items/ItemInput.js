@@ -17,7 +17,7 @@ const ItemInput = (props) => {
   const handleAddItem = () => {
     const dup = itemList.some(item => item.value === enteredItem);
     enteredItem.length < 1 ? alert("Item field cannot be empty.") :
-      enteredItem.length === 20 ? alert("Item cannot exceed 20 characters.") :
+      enteredItem.length > 20 ? alert("Item cannot exceed 20 characters.") :
         dup ? alert("Item has already been entered") :
           props.onAddItem(enteredItem);
     setEnteredItem('');
@@ -101,13 +101,12 @@ const styles = StyleSheet.create({
   },
   addButton: {
     position: 'absolute',
-    margin: 72,
+    margin: 64,
     bottom: 0,
     backgroundColor: Colors.mainYellow,
   },
   cancelButton: {
     position: 'absolute',
-    margin: 36,
     top: 0,
     left: 0,
     backgroundColor: 'transparent',

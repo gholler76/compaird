@@ -53,7 +53,7 @@ const AddItemsScreen = (props) => {
         // set item two by looping through all items after item one
         for (let two = one + 1;two < itemList.length;two++) {
           id++;
-          matchups.push({id: id, itemOne: itemList[one], itemTwo: itemList[two]});
+          matchups.push({id: id, itemOne: itemList[one], itemTwo: itemList[two], winner: null, score: 0});
         }
       }
       setMatchups(prevState => [matchups]);
@@ -122,7 +122,7 @@ const AddItemsScreen = (props) => {
         color={Colors.darkGreen}
       />
       <FAB
-        style={styles.fab}
+        style={styles.addButton}
         icon="plus"
         visible={itemList.length < 10 ? true : false}
         onPress={openAddItemModal}
@@ -141,23 +141,22 @@ const styles = StyleSheet.create({
   listRow: {
     flexDirection: 'row'
   },
-  fab: {
+  addButton: {
     position: 'absolute',
-    margin: 36,
-    right: 0,
-    bottom: 0,
+    right: 16,
+    bottom: 32,
     backgroundColor: Colors.mainYellow,
   },
   compareButton: {
     position: 'absolute',
-    bottom: 36,
+    bottom: 32,
     backgroundColor: '#fff',
     alignSelf: 'center',
   },
   clearButton: {
     position: 'absolute',
-    bottom: 36,
-    left: 36,
+    bottom: 32,
+    left: 16,
     backgroundColor: Colors.liteGray,
   },
   buttonText: {

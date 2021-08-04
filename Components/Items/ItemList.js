@@ -20,7 +20,7 @@ const ItemList = (props) => {
 const styles = StyleSheet.create({
   listItem: {
     backgroundColor: 'white',
-    width: Dimensions.get('window').width * 0.66,
+    width: Dimensions.get('window').width * 0.70,
     padding: 5,
     borderWidth: 2,
     borderColor: Colors.darkGreen,
