@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Dimensions} from 'react-native';
 import {FAB, IconButton} from 'react-native-paper';
 
@@ -9,13 +9,14 @@ import Colors from '../constants/colors/colors';
 const CompareScreen = props => {
   const itemList = props.navigation.getParam('itemList');
   const matchups = props.navigation.getParam('matchups');
-  const firstMatchup = props.navigation.getParam('firstMatchup');
 
-  const [gapValue, setGapValue] = useState(1); // track the gap value (1-5) chosen by the user for each matchup
+  const lastMatchToggle = useRef(false);
+  const lastMatch = lastMatchToggle.current;
+
   const [selectedId, setSelectedId] = useState(null); // track the item id selected by the user as the winner for each matchup
+  const [gapValue, setGapValue] = useState(1); // track the gap value (1-5) chosen by the user for each matchup
   const [totalScore, setTotalScore] = useState(itemList); // track the score totals for each item for all matchups
   const [matchIndex, setMatchIndex] = useState(0); // set index for each matchup
-  const [match, setMatch] = useState(firstMatchup); // set the current matchup to be scored by the user
   const [results, setResults] = useState(matchups); // map over matchups and populate the winner and score
 
   // takes selected item and gap value and updates result of the matchup, then sets up the next match
@@ -30,16 +31,19 @@ const CompareScreen = props => {
       const updatedResults = results.map(el => el.id === matchIndex + 1 ? {...el, winner: el.winner = selectedId, score: el.score = gapValue} : el);
       setResults(updatedResults);
     };
-    // if current match is the final match, don't increment match index or set up next match
+    // if current match is the final match, flip lastMatch toggle and don't try to render a new match
     if (matchIndex == matchups.length - 1) {
-      null;
+      lastMatchToggle.current = true;
     } else {
-      const nextMatch = matchups[matchIndex + 1];
-      setMatch([nextMatch.itemOne, nextMatch.itemTwo]);
       setMatchIndex(matchIndex + 1);
       setSelectedId(null);
     };
   };
+
+  // preserve the winner from the rendered match if it's been navigated to
+  useEffect(() => {
+    setSelectedId(results[matchIndex].winner);
+  }, [matchIndex]);
 
   // send user to results screen after all matchups were decided and pass props for results, winners and full item list 
   const showResults = () => {
@@ -49,12 +53,31 @@ const CompareScreen = props => {
     });
   };
 
+  // move back through previous matchups and reset score for match so value doesn't duplicate
+  const prevMatch = (index) => {
+    if (lastMatch == true) {
+      const lastMatchup = results[results.length - 1];
+      setTotalScore(totalScore.map(el => el.id === lastMatchup.winner ? {...el, score: el.score -= lastMatchup.score} : el));
+    }
+    lastMatchToggle.current = false;
+    setMatchIndex(prev => index);
+    const thisMatch = results[index];
+    setSelectedId(thisMatch.winner);
+    setTotalScore(totalScore.map(el => el.id === thisMatch.winner ? {...el, score: el.score -= thisMatch.score} : el));
+  };
+
   console.log('==== results ====');
   console.log(results);
   console.log('==== totalScore ====');
   console.log(totalScore);
   console.log('==== selectedId ====');
   console.log(selectedId);
+  console.log('==== matchIndex ====');
+  console.log(matchIndex);
+  console.log('==== lastMatch ====');
+  console.log(lastMatch);
+
+
 
   return (
     <View style={styles.screen}>
@@ -85,7 +108,7 @@ const CompareScreen = props => {
             maximumValue={5}
             onValueChange={(value) => setGapValue(value)}
             step={1}
-            value={1}
+            value={results[matchIndex].score}
             thumbTintColor={Colors.mainYellow}
             minimumTrackTintColor={Colors.mainGreen}
             maximumTrackTintColor={Colors.darkGreen}
@@ -115,7 +138,7 @@ const CompareScreen = props => {
         style={styles.resultsButton}
         onPress={showResults}
         label="SHOW RESULTS"
-        visible={results[results.length - 1].winner == null ? false : true}
+        visible={lastMatch == true ? true : false}
         color={Colors.darkGreen}
       />
       <FAB
@@ -128,7 +151,7 @@ const CompareScreen = props => {
         style={styles.nextButton}
         onPress={renderMatch}
         icon="arrow-right-bold"
-        visible={results[results.length - 1].winner == null ? true : false}
+        visible={lastMatch == true ? false : true}
       />
     </View >
   );

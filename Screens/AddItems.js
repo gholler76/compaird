@@ -53,7 +53,7 @@ const AddItemsScreen = (props) => {
         // set item two by looping through all items after item one
         for (let two = one + 1;two < itemList.length;two++) {
           id++;
-          matchups.push({id: id, itemOne: itemList[one], itemTwo: itemList[two], winner: null, score: 0});
+          matchups.push({id: id, itemOne: itemList[one], itemTwo: itemList[two], winner: null, score: null});
         }
       }
       setMatchups(prevState => [matchups]);
