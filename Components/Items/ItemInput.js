@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, TextInput, Text, Modal, TouchableOpacity, Dimensions} from 'react-native';
+import {StyleSheet, View, TextInput, Text, Modal, Dimensions} from 'react-native';
 import {FAB} from 'react-native-paper';
 
 import Colors from '../../constants/colors/colors';

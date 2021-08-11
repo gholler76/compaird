@@ -24,16 +24,14 @@
     ],
     "android": {
       "package": "design.dropout.compaird",
-      "versionCode": 1,
+      "versionCode": 2,
       "adaptiveIcon": {
         "foregroundImage": "./assets/compaird_icon_1024.png",
         "backgroundColor": "#669933"
       },
       "permissions": []
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
+    "web": {},
     "description": "Compaird is a simple pairwise comparison tool that allows a user to enter a list of items and compare each item against the others, along with an input for how far apart the items are in value or importance. After the comparisons are done, the winner is shown, along with the sorted results."
   }
 }

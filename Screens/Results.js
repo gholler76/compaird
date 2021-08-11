@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, ScrollView, View, TouchableOpacity, Dimensions} from 'react-native';
+import {StyleSheet, Text, ScrollView, View, Dimensions} from 'react-native';
 import {FAB} from 'react-native-paper';
 
 import Colors from '../constants/colors/colors';
