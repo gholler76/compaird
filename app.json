@@ -24,7 +24,7 @@
     ],
     "android": {
       "package": "design.dropout.compaird",
-      "versionCode": 2,
+      "versionCode": 3,
       "adaptiveIcon": {
         "foregroundImage": "./assets/compaird_icon_1024.png",
         "backgroundColor": "#669933"
