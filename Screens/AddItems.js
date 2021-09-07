@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import {StyleSheet, Text, View, FlatList, Dimensions} from 'react-native';
-import {IconButton, FAB} from 'react-native-paper';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, FlatList, Dimensions } from 'react-native';
+import { IconButton, FAB } from 'react-native-paper';
 
 import ItemInput from '../components/items/ItemInput';
 import ItemList from '../components/items/ItemList';
@@ -19,7 +19,7 @@ const AddItemsScreen = (props) => {
   const handleEnteredItem = (enteredItem) => {
     setItemList(prevState => [
       ...itemList,
-      {id: Math.floor(Math.random() * 10000).toString(), value: enteredItem, score: 0}
+      { id: Math.floor(Math.random() * 10000).toString(), value: enteredItem, score: 0 }
     ]);
     setIsAddItem(false); // toggle to control appearance of modal for item input
     setItemCount(prevState => itemCount + 1);
@@ -48,19 +48,19 @@ const AddItemsScreen = (props) => {
       let id = 0;
 
       // set item one and loop through the other items
-      for (let i = 0;i < itemList.length - 1;i++) {
+      for (let i = 0; i < itemList.length - 1; i++) {
         one = i;
         // set item two by looping through all items after item one
-        for (let two = one + 1;two < itemList.length;two++) {
+        for (let two = one + 1; two < itemList.length; two++) {
           id++;
-          matchups.push({id: id, itemOne: itemList[one], itemTwo: itemList[two], winner: null, score: null});
+          matchups.push({ id: id, itemOne: itemList[one], itemTwo: itemList[two], winner: null, score: null });
         }
       }
       setMatchups(prevState => [matchups]);
       // set navigation to Compare screen and pass all matchups, the full itemList and the first matchup as default
       props.navigation.navigate({
         routeName: 'CompareItems',
-        params: {matchups, itemList, firstMatchup},
+        params: { matchups, itemList, firstMatchup },
       });
     };
   };
@@ -87,7 +87,7 @@ const AddItemsScreen = (props) => {
       />
       {/* if item list is empty, show the message below */}
       {itemList.length === 0 ? <View style={styles.emptyMessageBox}>
-        <Text style={styles.emptyMessageText}>Add Items to get started!</Text>
+        <Text style={styles.emptyMessageText}>Add at least 4 items to start comparing.</Text>
       </View>
         :
         <FlatList
