@@ -87,7 +87,7 @@ const AddItemsScreen = (props) => {
       />
       {/* if item list is empty, show the message below */}
       {itemList.length === 0 ? <View style={styles.emptyMessageBox}>
-        <Text style={styles.emptyMessageText}>Add at least 4 items to start comparing.</Text>
+        <Text style={styles.emptyMessageText}>Add at least 4 items to begin comparing</Text>
       </View>
         :
         <FlatList

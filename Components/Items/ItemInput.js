@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import {StyleSheet, View, TextInput, Text, Modal, Dimensions} from 'react-native';
-import {FAB} from 'react-native-paper';
+import React, { useState } from 'react';
+import { StyleSheet, View, TextInput, Text, Modal, Dimensions } from 'react-native';
+import { FAB } from 'react-native-paper';
 
 import Colors from '../../constants/colors/colors';
 
@@ -36,7 +36,7 @@ const ItemInput = (props) => {
       transparent={true}
     >
       <View style={styles.inputContainer}>
-        <Text style={styles.inputTitle}>Add Item to Compare</Text>
+        <Text style={styles.inputTitle}>Add Item to Your List</Text>
         <Text style={styles.itemCount}>{props.itemCount + 1} of 10</Text>
         <TextInput
           autoFocus={true}
@@ -46,6 +46,7 @@ const ItemInput = (props) => {
           maxLength={20}
         />
         <Text style={styles.charCount}>{20 - enteredItem.length} characters remaining</Text>
+        {props.itemCount < 4 ? <Text style={styles.itemCount}>You need {4 - props.itemCount} more {props.itemCount === 3 ? "item" : "items"} to begin comparing</Text> : null}
         <FAB
           style={styles.addButton}
           icon="plus"
